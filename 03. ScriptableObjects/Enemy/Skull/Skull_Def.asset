@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156d8d532fd003844a256cdb9d48f215, type: 3}
+  m_Name: Skull_Def
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDefAsset
+  enemyPrefab: {fileID: 6493144654010789595, guid: 7378526a9878c4041bb1ea8fb982d86a, type: 3}
+  stats: {fileID: 11400000, guid: ba0c4f98eb116b543a5da860c1e6e409, type: 2}
+  attack: {fileID: 11400000, guid: 356be09c1cab97e418cea41188a95ca0, type: 2}
+  ai: {fileID: 11400000, guid: 6546817b6ecb2124981e77d8466e94b5, type: 2}
+  reward: {fileID: 11400000, guid: 4ad8d9ae399f94a4f9856def2cc6af79, type: 2}
+  boss: {fileID: 0}
+  targetSelector: {fileID: 11400000, guid: 5c3cbe56ecd5e2045b5d65902d4e8539, type: 2}
