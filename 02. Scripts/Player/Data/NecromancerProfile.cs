@@ -16,9 +16,9 @@ public class NecromancerProfile : ScriptableObject
     public float reviveChance = 0.25f;
 
     [Header("부활 스탯 계수")]
-    [Range(0.05f, 1f)] public float hpMul = 0.5f;
+    public float hpMul = 0.5f;
 
-    [Range(0.05f, 1f)] public float attackMul = 0.5f;
+    public float attackMul = 0.5f;
 
     [Header("제약")]
     public bool bossOK = false;

@@ -1,32 +1,40 @@
 using UnityEngine;
 
-public class PlayerHp : MonoBehaviour
+using Necrogue.Player.Runtime;
+using Necrogue.Core.Domain.Stats;
+using System;
+
+public class PlayerHp : MonoBehaviour, IDamageable
 {
     private Player player;
 
     [Header("HP 설정")]
-    [SerializeField] private int maxHp = 100;
+    [SerializeField] private int maxHp = 200;
     [SerializeField] private float invincibleTime = 0.5f;
+
+    public int MaxHp => maxHp;
 
     public int CurrentHp { get; private set; }
     public bool IsInvincible { get; private set; }
 
     float invincibleEndTime;
 
+    public bool IsDead => CurrentHp <= 0; // CurrentHp가 0 이하이면 true, 아니면 false를 반환
+
     public void Init(Player player)
     {
         this.player = player;
     }
 
-    public void InitFromBase(PlayerStatAsset stats)
+    public void ApplyStats(PlayerRuntimeStats runtimeStats)
     {
-        player.Stats = stats;
+        maxHp = runtimeStats.maxHp;
+        CurrentHp = Mathf.Min(CurrentHp, maxHp);
+    }
 
-        if (stats)
-        {
-            maxHp = stats.baseMaxHp;
-            CurrentHp = maxHp;
-        }
+    public void ResetFull()
+    {
+        CurrentHp = maxHp;
     }
 
     void Start()
@@ -78,6 +86,7 @@ public class PlayerHp : MonoBehaviour
         // - 사운드
         // - 넉백 트리거
         // 등을 연결하면 됨
+        player.UI.DamageFlashUI.Play();
         Debug.Log($"Player damaged: -{damage}, HP={CurrentHp}");
     }
 
@@ -94,7 +103,15 @@ public class PlayerHp : MonoBehaviour
 
 
 
-    // ==============외부 API 디버그================
+    // ==============외부 API / 디버그================
+    public void Heal(int value)
+    {
+        CurrentHp = Mathf.Min(CurrentHp + value, maxHp);
+    }
+    public void FullHeal()
+    {
+        CurrentHp = maxHp;
+    }
     public void SetHpDirect(int value)
     {
         CurrentHp = Mathf.Clamp(value, 0, maxHp);

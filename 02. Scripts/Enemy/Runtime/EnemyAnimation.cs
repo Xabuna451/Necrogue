@@ -36,7 +36,11 @@ public class EnemyAnimation : MonoBehaviour
 
     public void PlayResurrection()
     {
-        if (animator) animator.SetTrigger("Resurrection");
+        if (animator)
+        {
+            animator.ResetTrigger("Resurrection");  // 중복 방지
+            animator.SetTrigger("Resurrection");
+        }
     }
 
     public void ResetForSpawn()

@@ -2,43 +2,42 @@ using UnityEngine;
 
 public class CorpseStateSMB : StateMachineBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    private EnemyVisual visual;
     private Material originalMaterial;
     private Material outlineMaterial;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        spriteRenderer = animator.GetComponent<SpriteRenderer>();
+        visual = animator.GetComponent<EnemyVisual>();
 
-        originalMaterial = spriteRenderer.material;
+        originalMaterial = visual.SR.material;
 
         // Outline Material (Assets/Resources/Materials/OutlineMaterial.asset 에 미리 만들기)
-        outlineMaterial = Resources.Load<Material>("Materials/OutlineMaterial");
+        //outlineMaterial = Resources.Load<Material>("Materials/OutlineMaterial");
 
         // 시체 기본 색상/투명도
-        spriteRenderer.color = new Color(0.8f, 0.8f, 0.8f, 0.7f);
+        visual.SetCorpse(true);
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        spriteRenderer.color = Color.white;
+        visual.SetCorpse(false);
     }
 
     // 외부에서 호출: 마우스 오버 시
     public void SetHighlight(bool active)
     {
-        Debug.Log("하이라이응으"); // 지울것
-        if (spriteRenderer == null) return;
+        if (visual == null) return;
 
         if (active && outlineMaterial != null)
         {
-            spriteRenderer.material = outlineMaterial;
-            spriteRenderer.color = Color.white; // Outline이 잘 보이게
+            visual.SR.material = outlineMaterial;
+            visual.SetCorpse(true);
         }
         else
         {
-            spriteRenderer.material = originalMaterial;
-            //spriteRenderer.color = new Color(0.8f, 0.8f, 0.8f, 0.7f);
+            visual.SR.material = originalMaterial;
+            visual.SetCorpse(true);
         }
     }
 }

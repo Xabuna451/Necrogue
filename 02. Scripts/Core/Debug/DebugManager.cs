@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 public class DebugManager : MonoBehaviour
 {
     Player player;

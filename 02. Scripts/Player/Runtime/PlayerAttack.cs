@@ -1,13 +1,16 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+using Necrogue.Core.Domain.Stats;
+using System;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("공격 스탯")]
-    [SerializeField] private int attackPower = 10;
+    [SerializeField] private int attack = 10;
 
     private Player player;
 
-    public int AttackPower => attackPower;
+    public int Attack => attack;
 
     public void Init(Player player)
     {
@@ -18,7 +21,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (stats)
         {
-            attackPower = stats.baseAttack;
+            attack = stats.baseAttack;
         }
     }
 
@@ -31,8 +34,13 @@ public class PlayerAttack : MonoBehaviour
     // ============== 외부 API (디버그/치트) ==============
     public void SetAttackDirect(int value)
     {
-        attackPower = Mathf.Max(0, value);
-        Debug.Log($"[DEBUG] Player Attack set to {attackPower}");
+        attack = Mathf.Max(0, value);
+        Debug.Log($"[DEBUG] Player Attack set to {attack}");
+    }
+
+    public void ApplyStats(PlayerRuntimeStats runtimeStats)
+    {
+        attack = runtimeStats.attack;
     }
     // ====================================================
 }

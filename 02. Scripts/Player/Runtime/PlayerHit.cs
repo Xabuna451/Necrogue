@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 public class PlayerHit : MonoBehaviour
 {
     [Header("피격 판정")]

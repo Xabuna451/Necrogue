@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private Player player;
@@ -58,7 +60,7 @@ public class PlayerWeapon : MonoBehaviour
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = Quaternion.identity;
 
-        int dmg = player.Attack != null ? player.Attack.AttackPower : 1;
+        int dmg = player.Attack != null ? player.Attack.Attack : 1;
 
         // “무기값을 주입”하는 방식으로 다양화
         bullet.Fire(dir, weapon.bulletSpeed, dmg, weapon.bulletLifeTime);

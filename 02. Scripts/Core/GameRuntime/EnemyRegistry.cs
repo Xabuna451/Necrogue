@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class EnemyRegistry : MonoBehaviour
 {
-    public static EnemyRegistry Instance { get; private set; }
+    public static EnemyRegistry Instance;
 
     readonly HashSet<EnemyCtrl> enemy = new();
     readonly HashSet<EnemyCtrl> ally = new();
 
-    Transform player;
+    [SerializeField] Transform player;
 
     void Awake()
     {
@@ -23,6 +23,7 @@ public class EnemyRegistry : MonoBehaviour
     public void SetPlayer(Transform t)
     {
         player = t;
+        Debug.Log($"[EnemyRegistry] Player set: {(player ? player.name : "null")}");
     }
 
     public Transform GetPlayer()
@@ -35,8 +36,10 @@ public class EnemyRegistry : MonoBehaviour
         if (!e) return;
         Remove(e);
 
-        if (e.Faction == Faction.Enemy) enemy.Add(e);
-        else if (e.Faction == Faction.Ally) ally.Add(e);
+        if (e.Faction == Faction.Enemy)
+            enemy.Add(e);
+        else if (e.Faction == Faction.Ally)
+            ally.Add(e);
     }
 
     public void Remove(EnemyCtrl e)
@@ -50,11 +53,6 @@ public class EnemyRegistry : MonoBehaviour
     {
         return me.Faction == Faction.Enemy ? ally : enemy;
     }
-
-
-
-
-
 
     // == DEBUG INFO ==
     [SerializeField] List<EnemyCtrl> debugEnemy = new();

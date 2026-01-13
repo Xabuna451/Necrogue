@@ -9,17 +9,24 @@ public class NearestEnemySelector : TargetSelector
         Transform best = null;
         float bestSqr = float.PositiveInfinity;
 
-        var player = GameManager.Instance ? GameManager.Instance.player : null;
-        if (player)
+        var reg = EnemyRegistry.Instance;
+        if (reg == null) return null;
+
+        var player = reg.GetPlayer();
+
+        // Ally일 때는 플레이어를 타겟하지 않음
+        if (me.Faction == Faction.Ally && player)
         {
-            Vector2 d = (Vector2)player.transform.position - (Vector2)me.transform.position;
+            // 플레이어 제외
+        }
+        else if (player)
+        {
+            // Enemy일 때는 플레이어 우선
+            Vector2 d = (Vector2)player.position - (Vector2)me.transform.position;
             float sqr = d.sqrMagnitude;
             bestSqr = sqr;
-            best = player.transform;
+            best = player;
         }
-
-        var reg = EnemyRegistry.Instance;
-        if (reg == null) return best;
 
         var list = reg.GetOpposite(me);
         if (list == null) return best;
@@ -28,12 +35,10 @@ public class NearestEnemySelector : TargetSelector
 
         foreach (var e in list)
         {
-            if (!e) continue;
-            if (!e.gameObject.activeInHierarchy) continue;
-            if (e.Faction == Faction.Corpse) continue;
+            if (!e || !e.gameObject.activeInHierarchy || e.Faction == Faction.Corpse) continue;
 
             var hp = e.GetComponent<EnemyHp>();
-            if (hp != null && hp.Dead) continue;
+            if (hp != null && hp.IsDead) continue;
 
             Vector2 d = (Vector2)e.transform.position - mePos;
             float sqr = d.sqrMagnitude;

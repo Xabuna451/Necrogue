@@ -1,7 +1,10 @@
 using UnityEngine;
+using Necrogue.Core.Domain.Necro;
+using Necrogue.Player.Runtime;
 
 public class PlayerNecroController : MonoBehaviour
 {
+    [SerializeField] NecroPerkState perkState;
     [SerializeField] InputManager input;
     [SerializeField] float findRange = 5f;
 
@@ -17,7 +20,6 @@ public class PlayerNecroController : MonoBehaviour
         player = p;
         input = im;
     }
-
     void Update()
     {
         FindNearestCorpse();
@@ -26,7 +28,63 @@ public class PlayerNecroController : MonoBehaviour
             KillUndeadUnderMouse();
     }
 
-    // 1. 가장 가까운 시체 찾고 하이라이트
+    public void ApplyRuntime(NecroRuntimeParams p)
+    {
+        if (!perkState || p == null) return;
+
+        // 1) NecroPerkState에 값 밀어넣기
+        perkState.SetAllyDamage(p.allyDamageMul, p.allyDamageAdd);
+        perkState.SetAllyHp(p.allyHpMul, p.allyHpAdd);
+        perkState.SetAllyCapBonus(p.allyCapAdd);
+
+        // 2) 즉시 반영: 현재 언데드 전부 재계산
+        RebuildAllUndeadStats();
+    }
+    void RebuildAllUndeadStats()
+    {
+        var hits = Physics2D.OverlapCircleAll(
+            player.transform.position,
+            100f,              // 전체 범위(충분히 크게)
+            undeadLayer
+        );
+
+        foreach (var h in hits)
+        {
+            var ctrl = h.GetComponentInParent<EnemyCtrl>();
+            var hp = h.GetComponentInParent<EnemyHp>();
+
+            if (!ctrl || !hp) continue;
+            if (ctrl.Faction != Faction.Ally) continue;
+
+            ApplyUndeadStat(ctrl, hp);
+        }
+    }
+    void ApplyUndeadStat(EnemyCtrl ctrl, EnemyHp hp)
+    {
+        var necroProfile = player.Stats.necromaner;
+        if (!necroProfile) return;
+
+        // === HP ===
+        int maxHp = NecroUndeadStatFormula.ComputeMaxHp(
+            hp.Hp,                 // EnemyStatAsset 기준값
+            necroProfile.hpMul,
+            perkState.AllyHpAdd,
+            perkState.AllyHpMul
+        );
+
+        hp.SetMaxHp(maxHp);
+
+        // === Attack ===
+        float atkMul = NecroUndeadStatFormula.ComputeAttackMul(
+            ctrl.def.attack.attackDamage,              // EnemyStatAsset 기준값
+            necroProfile.attackMul,
+            perkState.AllyDamageAdd,
+            perkState.AllyDamageMul
+        );
+
+        ctrl.SetAttackMul(atkMul);
+    }
+
     void FindNearestCorpse()
     {
         if (!player) return;

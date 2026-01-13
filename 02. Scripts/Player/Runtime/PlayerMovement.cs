@@ -1,5 +1,9 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+using Necrogue.Core.Domain.Stats;
+using System;
+
 public class PlayerMovement : MonoBehaviour
 {
     private Player player;
@@ -55,5 +59,10 @@ public class PlayerMovement : MonoBehaviour
             Vector2 slide = moveDir - Vector2.Dot(moveDir, n) * n;
             rb.MovePosition(rb.position + slide.normalized * moveDist);
         }
+    }
+
+    public void ApplyStats(PlayerRuntimeStats runtimeStats)
+    {
+        speed = runtimeStats.speed;
     }
 }

@@ -1,16 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [Header("게임 시간")]
+    [SerializeField] GameClock gameClock;
 
-    [Header("참조")]
+    [Header("풀")]
     [SerializeField] ObjectPool pools;
     public Player player;
 
     [Header("Enemy")]
     [SerializeField] EnemySpawnProfile spawnProfile;
+    [SerializeField] EnemySpawner spawner;
 
     [Header("Player Bullet")]
     [SerializeField] PlayerBullet bulletPrefab;
@@ -43,7 +48,61 @@ public class GameManager : MonoBehaviour
         );
 
         player = FindFirstObjectByType<Player>();
-        EnemyRegistry.Instance.SetPlayer(player.transform);
+        if (!spawner) spawner = FindFirstObjectByType<EnemySpawner>();
+    }
+
+    private void Start()
+    {
+        // Player 재확인
+        if (player == null)
+        {
+            player = FindFirstObjectByType<Player>();
+            if (player != null)
+            {
+                Debug.Log("[GameManager] Player found in Start.");
+            }
+            else
+            {
+                Debug.LogError("[GameManager] Player still not found in Start!");
+                return;
+            }
+        }
+
+        // Player 태그 확인
+        if (player != null && !player.CompareTag("Ally"))
+        {
+            Debug.LogWarning($"[GameManager] Player tag is '{player.tag}', should be 'Ally'!");
+        }
+
+        // EnemyRegistry 설정 - Start에서 확실하게 처리
+        var registry = EnemyRegistry.Instance;
+        if (registry == null)
+        {
+            registry = FindFirstObjectByType<EnemyRegistry>();
+            Debug.LogError("[GameManager] EnemyRegistry.Instance is null! Found via FindFirstObjectByType: " + (registry != null));
+        }
+
+        if (registry != null && player != null)
+        {
+            registry.SetPlayer(player.transform);
+            Debug.Log("[GameManager] Registry initialized successfully.");
+        }
+        else
+        {
+            Debug.LogError($"[GameManager] Cannot set player - Registry: {registry != null}, Player: {player != null}");
+        }
+    }
+
+    void Update()
+    {
+#if UNITY_EDITOR
+        // ============ 디버그 키 =============
+
+        if (Input.GetKeyDown(KeyCode.P)) gameClock.SkipTime(60f);
+        if (Input.GetKeyDown(KeyCode.L)) player.Exp.DebugLevelUp();
+
+        // ===================================
+#endif
     }
 
     EnemyDefAsset[] CollectDefs(EnemySpawnProfile prof)

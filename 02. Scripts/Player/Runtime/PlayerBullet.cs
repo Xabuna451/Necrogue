@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerBullet : MonoBehaviour
 {

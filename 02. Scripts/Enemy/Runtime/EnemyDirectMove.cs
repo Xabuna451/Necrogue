@@ -10,12 +10,10 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
 
     Vector2 target;
     bool hasTarget;
-    public bool isAttack;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
     }
 
     public void Init(EnemyCtrl ctx)
@@ -34,7 +32,6 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
     public void Stop()
     {
         hasTarget = false;
-        isAttack = false;
         if (rb) rb.linearVelocity = Vector2.zero;
         ctx?.Animation?.SetMove(false);
     }
@@ -42,7 +39,6 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
     void FixedUpdate()
     {
         if (!hasTarget) return;
-        if (isAttack) return;
 
         if (ctx == null || ctx.def == null || ctx.def.stats == null) return;
 
@@ -57,8 +53,9 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
         rb.linearVelocity = dir * ctx.def.stats.moveSpeed;
 
         if (ctx.spriteRenderer)
+        {
             ctx.spriteRenderer.flipX = dir.x < 0f;
-
+        }
         if (col)
         {
             var o = col.offset;

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Necrogue.Player.Runtime;
+
 public class PlayerAnimation : MonoBehaviour
 {
     private Player player;
