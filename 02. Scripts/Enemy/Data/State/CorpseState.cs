@@ -6,12 +6,11 @@ public class CorpseState : EnemyState
 
     public override void Enter()
     {
-        // DeadState에서 이미 처리됐지만, 안전하게
         ctx.Move.Stop();
         ctx.Animation?.SetMove(false);
 
         ctx.SetCollider(false);
-        ctx.SetFaction(Faction.Corpse);
+        ctx.ChangeFaction(Faction.Corpse, stopMove: false, retarget: false);
     }
 
 

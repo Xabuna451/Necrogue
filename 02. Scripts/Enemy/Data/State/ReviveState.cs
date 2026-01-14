@@ -8,11 +8,9 @@ public class ReviveState : EnemyState
     {
         ctx.Animation?.PlayResurrection();
 
-        ctx.SetFaction(Faction.Ally);
         ctx.SetCollider(true);
-        ctx.Visual.SetAlly();  // 또는 직접 색상 설정
+        ctx.ChangeFaction(Faction.Ally, stopMove: false, retarget: true);
     }
-
     public override void Tick()
     {
         // 부활 애니메이션 끝나면 자동으로 Idle or Chase로

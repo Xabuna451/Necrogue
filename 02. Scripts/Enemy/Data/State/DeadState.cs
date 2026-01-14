@@ -10,7 +10,7 @@ public class DeadState : EnemyState
         ctx.Animation?.SetMove(false);
         ctx.Animation?.PlayDead();
 
-        ctx.SetFaction(Faction.Corpse);
+        ctx.ChangeFaction(Faction.Corpse, stopMove: true, retarget: false);
         ctx.SetCollider(false);
     }
 

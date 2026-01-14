@@ -145,9 +145,8 @@ public class EnemyContext : MonoBehaviour
         isEliteRuntime = false;
 
         // Faction 초기화
-        ChangeFaction(Faction.Enemy);
-        SetTag("Enemy");
-        SetLayer(LayerMask.NameToLayer("Enemy"));
+        faction = Faction.Enemy;
+        ApplyFactionRuntime(Faction.Enemy, reindexRegistry: false);
 
         // BaseStats 스냅샷 (딱 여기서만 세팅)
         if (def != null && def.stats != null)
@@ -173,7 +172,6 @@ public class EnemyContext : MonoBehaviour
         attackMul = 1f;
 
         SetCollider(true);
-
         Visual.Reset();
 
         Move?.Stop();
@@ -202,7 +200,7 @@ public class EnemyContext : MonoBehaviour
         isEliteRuntime = true;
 
         // 비주얼
-        Visual.SetElite(elite);
+        Visual.SetEliteLookOnly(elite);
 
         // HP: BaseStats 기반으로 재설정
         int eliteMaxHp = Mathf.Max(1, Mathf.RoundToInt(BaseStats.maxHp * Mathf.Max(0.1f, elite.hpMul)));
@@ -220,50 +218,62 @@ public class EnemyContext : MonoBehaviour
 
 
     // ─────────────────────────────────────────────
-    // Faction
+    // Set / Apply
     // ─────────────────────────────────────────────
-    public void SetFaction(Faction f)
+
+    // 하드코딩은 여기 한 곳에만
+    void ApplyTagLayer(Faction f)
     {
-        if (faction == f) return;
-
-        var prev = faction;
-        faction = f;
-
-        if (faction == Faction.Enemy)
+        switch (f)
         {
-            tag = "Enemy";
-            gameObject.layer = LayerMask.NameToLayer("Enemy");
-            //   Visual.SetFaction(Faction.Enemy);
-        }
-        else if (faction == Faction.Ally)
-        {
-            tag = "Ally";
-            gameObject.layer = LayerMask.NameToLayer("Ally");
-            //  Visual.SetFaction(Faction.Ally);
-        }
-        else
-        {
-            tag = "Corpse";
-            gameObject.layer = LayerMask.NameToLayer("Corpse");
-            //Visual.SetFaction(Faction.Corpse);
-        }
+            case Faction.Enemy:
+                gameObject.tag = "Enemy";
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
+                break;
 
-        if (EnemyRegistry.Instance != null)
+            case Faction.Ally:
+                gameObject.tag = "Ally";
+                gameObject.layer = LayerMask.NameToLayer("Ally");
+                break;
+
+            case Faction.Corpse:
+                gameObject.tag = "Corpse";
+                gameObject.layer = LayerMask.NameToLayer("Corpse");
+                break;
+        }
+    }
+    // 비주얼/레지스트리 포함해서 “팩션이 바뀌면 해야 할 것”을 한 군데로
+    void ApplyFactionRuntime(Faction f, bool reindexRegistry)
+    {
+        ApplyTagLayer(f);
+
+        // Visual은 “팩션 반영”만 맡김 (색상 정책은 Visual 내부로)
+        Visual?.SetFaction(f);
+
+        // 엘리트면 엘리트 룩 다시 덮기 (Ally/Corpse 색 적용 후에도 유지되게)
+        if (isEliteRuntime)
+            Visual?.SetEliteLookOnly();
+
+        if (reindexRegistry && EnemyRegistry.Instance != null)
         {
             EnemyRegistry.Instance.Remove(this);
             EnemyRegistry.Instance.Add(this);
         }
+    }
+    // 외부에서 팩션 바꿀 때는 무조건 이거만 호출
+    public void ChangeFaction(Faction next, bool stopMove = true, bool retarget = true)
+    {
+        var prev = faction;
+        if (prev == next) return;
 
-        OnFactionChanged?.Invoke(prev, faction);
+        faction = next;
+        ApplyFactionRuntime(next, reindexRegistry: true);
+
+        OnFactionChanged?.Invoke(prev, next);
 
         ClearTarget();
-        Retarget();
-        Move?.Stop();
-    }
-
-    public void ChangeFaction(Faction f)
-    {
-        faction = f;
+        if (retarget) Retarget();
+        if (stopMove) Move?.Stop();
     }
 
     // ─────────────────────────────────────────────

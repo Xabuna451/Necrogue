@@ -113,7 +113,7 @@ public class EnemyPool : MonoBehaviour
         e.gameObject.SetActive(false);
 
         e.Reset();
-        e.SetFaction(Faction.Enemy);
+        e.ChangeFaction(Faction.Enemy);
 
         var def = e.OriginDef;
         if (!def)
