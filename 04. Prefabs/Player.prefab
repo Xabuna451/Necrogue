@@ -45,6 +45,7 @@ Transform:
   - {fileID: 7876731651170597735}
   - {fileID: 8524196046799668867}
   - {fileID: 7674441153303772228}
+  - {fileID: 4223312033109701956}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5763940640168085681
@@ -221,8 +222,10 @@ MonoBehaviour:
   playerHit: {fileID: 769618736602449592}
   playerAnimation: {fileID: 3976876979099998590}
   playerWeapon: {fileID: 1674909930183547944}
+  ui: {fileID: 0}
   necroController: {fileID: -7974521238206638640}
   defaultWeapon: {fileID: 11400000, guid: 02b931032554c5f43a7f2da9cda0f07d, type: 2}
+  perkSystem: {fileID: 5765984081325348139}
 --- !u!114 &1674909930183547944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5f4425f6a804e4b80916f4d5919cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  attackPower: 1
+  attack: 10
 --- !u!114 &6373788204185112975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505a6a6c91678084cb64e936d4e44b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHp
-  maxHp: 20
+  maxHp: 100
   invincibleTime: 0.5
 --- !u!114 &4874806122997202351
 MonoBehaviour:
@@ -278,7 +281,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerExp
   level: 0
+  maxExp: 100
   currentExp: 0
+  growthMul: 1.1
+  maxLevel: 30
 --- !u!114 &8861102831182100095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f0c0e95b607f84a8dac8219b3f55f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerNecroController
+  perkState: {fileID: 5115147283949410406}
   input: {fileID: 0}
   findRange: 5
   corpseLayer:
@@ -342,6 +349,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babf919e0ce839442bdc2e0bb537c1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+--- !u!1 &1231890070175878972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4223312033109701956}
+  - component: {fileID: 5765984081325348139}
+  m_Layer: 0
+  m_Name: PerkSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4223312033109701956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231890070175878972}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7692041622532734515}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5765984081325348139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231890070175878972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7fddd35233d3f748856e74f316947b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSystem
+  basePickCount: 3
+  allPerks:
+  - {fileID: 11400000, guid: 01ef3838052dea94bb05824abfadce1b, type: 2}
+  - {fileID: 11400000, guid: 7187ac3d7f7b82f45979fdea5d6775b9, type: 2}
+  - {fileID: 11400000, guid: 5943e1e42ba67d24da03e69076f9aba2, type: 2}
+  - {fileID: 11400000, guid: 8eb4705a9fc2d98459fa9b6c3c06a85b, type: 2}
+  perkSelectUI: {fileID: 0}
 --- !u!1 &4118952069031758023
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7674441153303772228}
   - component: {fileID: 1915766475743859277}
+  - component: {fileID: 5115147283949410406}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Necromancer
@@ -496,3 +555,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NecromancerController
   stat: {fileID: 11400000, guid: dbf29cbd0a17af54e9a40006c6a1f053, type: 2}
+  perk: {fileID: 5115147283949410406}
+--- !u!114 &5115147283949410406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926478924479114559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea97f3b6449284a41b6b077f32019ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NecroPerkState

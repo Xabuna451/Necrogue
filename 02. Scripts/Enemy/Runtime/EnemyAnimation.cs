@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class EnemyAnimation : MonoBehaviour
 {
-    private EnemyCtrl ctx;
+    private EnemyContext ctx;
     private Animator animator;
 
-    public void Init(EnemyCtrl ctx)
+    public void Init(EnemyContext ctx)
     {
         this.ctx = ctx;
         animator = GetComponent<Animator>();

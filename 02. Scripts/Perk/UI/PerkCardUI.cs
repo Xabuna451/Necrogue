@@ -12,8 +12,8 @@ namespace Necrogue.Perk.UI
 
         [Header("UI")]
         [SerializeField] private Image icon;
-        [SerializeField] private Text nameText;
-        [SerializeField] private Text descText;
+        [SerializeField] private TMP_Text nameText;
+        [SerializeField] private TMP_Text descText;
         [SerializeField] private TMP_Text tierText;
 
         [Header("Tier Gradient Flow")]
@@ -46,8 +46,8 @@ namespace Necrogue.Perk.UI
             if (perk == null) { Clear(); return; }
 
             if (icon) icon.sprite = perk.icon;
-            if (nameText) nameText.text = perk.displayName;
 
+            if (nameText) nameText.text = perk.displayName;
             // 기본은 일반 설명
             evolved = false;
             ApplyDef();

@@ -8,8 +8,9 @@ public class FactionVisualConfig : ScriptableObject
     public Color AllyColor = new Color(0f, 1f, 1f, 1f);    // cyan
     public Color CorpseColor = new Color(0.8f, 0.8f, 0.8f, 0.7f);
 
-    [Header("특수 상태 오버레이 색상")]
+    [Header("엘리트 상태")]
     public Color EliteColor = new Color(1f, 0.4f, 0.2f, 1f);   // 주황빛 강한 느낌
+    public float EliteScaleMul = 1.5f;
     public Color ResurrectionGlow = new Color(0f, 0.9f, 1f, 0.85f);  // 부활 시 빛나는 청록
 
     [Header("추가 조정")]

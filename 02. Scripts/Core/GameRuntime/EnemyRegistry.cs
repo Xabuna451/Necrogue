@@ -5,8 +5,8 @@ public class EnemyRegistry : MonoBehaviour
 {
     public static EnemyRegistry Instance;
 
-    readonly HashSet<EnemyCtrl> enemy = new();
-    readonly HashSet<EnemyCtrl> ally = new();
+    readonly HashSet<EnemyContext> enemy = new();
+    readonly HashSet<EnemyContext> ally = new();
 
     [SerializeField] Transform player;
 
@@ -31,7 +31,7 @@ public class EnemyRegistry : MonoBehaviour
         return player;
     }
 
-    public void Add(EnemyCtrl e)
+    public void Add(EnemyContext e)
     {
         if (!e) return;
         Remove(e);
@@ -42,21 +42,21 @@ public class EnemyRegistry : MonoBehaviour
             ally.Add(e);
     }
 
-    public void Remove(EnemyCtrl e)
+    public void Remove(EnemyContext e)
     {
         if (!e) return;
         enemy.Remove(e);
         ally.Remove(e);
     }
 
-    public HashSet<EnemyCtrl> GetOpposite(EnemyCtrl me)
+    public HashSet<EnemyContext> GetOpposite(EnemyContext me)
     {
         return me.Faction == Faction.Enemy ? ally : enemy;
     }
 
     // == DEBUG INFO ==
-    [SerializeField] List<EnemyCtrl> debugEnemy = new();
-    [SerializeField] List<EnemyCtrl> debugAlly = new();
+    [SerializeField] List<EnemyContext> debugEnemy = new();
+    [SerializeField] List<EnemyContext> debugAlly = new();
 
     void LateUpdate()
     {

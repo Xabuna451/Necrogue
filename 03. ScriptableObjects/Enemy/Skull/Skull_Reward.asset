@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e3a780f16ff7840ba25c219ca31a3d, type: 3}
   m_Name: Skull_Reward
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRewardAsset
-  minExp: 1
-  maxExp: 3
+  minExp: 10
+  maxExp: 16
   minGold: 1
   maxGold: 2
   eliteBonus: 0

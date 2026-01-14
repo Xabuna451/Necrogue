@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156d8d532fd003844a256cdb9d48f215, type: 3}
+  m_Name: Zombie_Def
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDefAsset
+  id: 
+  displayName: 
+  description: 
+  enemyPrefab: {fileID: 6724649330577237413, guid: 44e10e1241d8f0a49a342ba01fe0585e, type: 3}
+  stats: {fileID: 11400000, guid: 071375ddcb175ae499571352c19d5101, type: 2}
+  attack: {fileID: 11400000, guid: c89c6edfa0acf4c48ab6d524a4b547b6, type: 2}
+  ai: {fileID: 11400000, guid: 6cfa880077b094d4b97b6f82da726ea3, type: 2}
+  visual: {fileID: 11400000, guid: 233fbc1dcb3c7444995a06ad1a2ae354, type: 2}
+  reward: {fileID: 11400000, guid: 29feb86af5a6a4147894628979b95d94, type: 2}
+  isElite: 0
+  eliteDef: {fileID: 11400000, guid: 367d69601677be54581a0528a52ef053, type: 2}
+  boss: {fileID: 0}
+  targetSelector: {fileID: 11400000, guid: c357a49ee8f51e44cb6d9780f4b8c859, type: 2}

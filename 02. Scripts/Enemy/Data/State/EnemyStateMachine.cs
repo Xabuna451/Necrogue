@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public class EnemyStateMachine
 {
-    private EnemyCtrl ctx;
+    private EnemyContext ctx;
     private Dictionary<EnemyStateType, EnemyState> states = new();
     public EnemyState CurrentState { get; private set; }
 
-    public EnemyStateMachine(EnemyCtrl ctx)
+    public EnemyStateMachine(EnemyContext ctx)
     {
         this.ctx = ctx;
         states.Add(EnemyStateType.Idle, new IdleState(ctx));

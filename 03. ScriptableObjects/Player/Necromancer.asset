@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NecromancerProfile
   maxCount: 1
   level: 1
-  reviveDelay: 5
+  reviveDelay: 1
   reviveChance: 0.5
   hpMul: 0.5
   attackMul: 0.5

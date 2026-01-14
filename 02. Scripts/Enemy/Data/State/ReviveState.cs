@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ReviveState : EnemyState
 {
-    public ReviveState(EnemyCtrl ctx) : base(ctx) { }
+    public ReviveState(EnemyContext ctx) : base(ctx) { }
 
     public override void Enter()
     {
@@ -10,7 +10,7 @@ public class ReviveState : EnemyState
 
         ctx.SetFaction(Faction.Ally);
         ctx.SetCollider(true);
-        //ctx.Visual.SetResurrect(true);  // 또는 직접 색상 설정
+        ctx.Visual.SetAlly();  // 또는 직접 색상 설정
     }
 
     public override void Tick()

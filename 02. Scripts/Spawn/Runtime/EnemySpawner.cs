@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
         e.OnDespawn -= OnEnemyDespawn;
         e.OnDespawn += OnEnemyDespawn;
 
-        void OnEnemyDespawn(EnemyCtrl e)
+        void OnEnemyDespawn(EnemyContext e)
         {
             if (e.IsElite) eliteAlive--;
         }

@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameClockUI : MonoBehaviour
 {
     [SerializeField] GameClock gameClock;
-    Text text;
+    TMP_Text text;
 
     void Awake()
     {
-        text = GetComponent<Text>();
+        text = GetComponent<TMP_Text>();
         if (!gameClock)
             gameClock = FindFirstObjectByType<GameClock>();
     }

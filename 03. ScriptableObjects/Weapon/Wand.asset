@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wand
   m_EditorClassIdentifier: Assembly-CSharp::WeaponProfile
   bulletPrefab: {fileID: 3376354851365282487, guid: 9d81cb654a3a75a43a8f9dc03bd49591, type: 3}
-  fireInterval: 1
+  fireInterval: 0.2
   bulletSpeed: 12
   bulletLifeTime: 2
   poolInitialSize: 100

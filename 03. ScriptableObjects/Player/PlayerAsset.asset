@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360db83ec4007d74d9a554dfaba1f4c5, type: 3}
   m_Name: PlayerAsset
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatAsset
-  baseMaxHp: 20
-  baseAttack: 1
-  baseSpeed: 5
+  baseMaxHp: 200
+  baseAttack: 10
+  baseSpeed: 3
   necromaner: {fileID: 11400000, guid: 75d5a07e244e31344856b5d521b9eb1c, type: 2}

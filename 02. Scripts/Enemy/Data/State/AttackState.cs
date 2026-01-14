@@ -4,7 +4,7 @@ public class AttackState : EnemyState
 {
     private float nextAttackTime;
 
-    public AttackState(EnemyCtrl ctx) : base(ctx)
+    public AttackState(EnemyContext ctx) : base(ctx)
     {
         nextAttackTime = 0f;
     }

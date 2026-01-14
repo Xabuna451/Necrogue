@@ -50,7 +50,7 @@ public class PlayerNecroController : MonoBehaviour
 
         foreach (var h in hits)
         {
-            var ctrl = h.GetComponentInParent<EnemyCtrl>();
+            var ctrl = h.GetComponentInParent<EnemyContext>();
             var hp = h.GetComponentInParent<EnemyHp>();
 
             if (!ctrl || !hp) continue;
@@ -59,7 +59,7 @@ public class PlayerNecroController : MonoBehaviour
             ApplyUndeadStat(ctrl, hp);
         }
     }
-    void ApplyUndeadStat(EnemyCtrl ctrl, EnemyHp hp)
+    void ApplyUndeadStat(EnemyContext ctrl, EnemyHp hp)
     {
         var necroProfile = player.Stats.necromaner;
         if (!necroProfile) return;
@@ -100,7 +100,7 @@ public class PlayerNecroController : MonoBehaviour
             var hp = h.GetComponentInParent<EnemyHp>();
             if (!hp) continue;
 
-            var ctrl = hp.GetComponent<EnemyCtrl>();
+            var ctrl = hp.GetComponent<EnemyContext>();
             if (!ctrl || ctrl.Faction != Faction.Corpse) continue;
 
             float d = (hp.transform.position - player.transform.position).sqrMagnitude;
@@ -123,8 +123,8 @@ public class PlayerNecroController : MonoBehaviour
         var anim = hp.GetComponent<Animator>();
         if (!anim) return;
 
-        var smb = anim.GetBehaviour<CorpseStateSMB>();
-        smb?.SetHighlight(on);
+        //var smb = anim.GetBehaviour<CorpseStateSMB>();
+        //smb?.SetHighlight(on);
     }
 
     // 2. 마우스 아래 언데드 즉사
@@ -136,7 +136,7 @@ public class PlayerNecroController : MonoBehaviour
         if (!hit.collider) return;
 
         var hp = hit.collider.GetComponentInParent<EnemyHp>();
-        var ctrl = hit.collider.GetComponentInParent<EnemyCtrl>();
+        var ctrl = hit.collider.GetComponentInParent<EnemyContext>();
         if (!hp || !ctrl) return;
 
         if (ctrl.Faction != Faction.Ally) return;

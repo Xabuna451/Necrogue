@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyContactDamage : MonoBehaviour, IDamageSource
 {
-    EnemyCtrl ctx;
+    EnemyContext ctx;
 
     public int Damage
     {
@@ -14,7 +14,7 @@ public class EnemyContactDamage : MonoBehaviour, IDamageSource
     }
     public bool ConsumeOnHit => false;
 
-    public void Init(EnemyCtrl ctx)
+    public void Init(EnemyContext ctx)
     {
         this.ctx = ctx;
     }

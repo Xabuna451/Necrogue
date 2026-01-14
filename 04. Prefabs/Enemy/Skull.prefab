@@ -76,7 +76,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.1, y: 0.4}
+  m_Size: {x: 0.1, y: 0.6}
   m_EdgeRadius: 0
 --- !u!1 &6493144654010789595
 GameObject:
@@ -94,11 +94,10 @@ GameObject:
   - component: {fileID: -5702665449985692700}
   - component: {fileID: 1856190845716097845}
   - component: {fileID: 3514365796241975131}
-  - component: {fileID: -4109213406353039527}
-  - component: {fileID: 6677736109788831504}
   - component: {fileID: -4532626991642224093}
   - component: {fileID: 5831629360080146788}
   - component: {fileID: -6924791272493052131}
+  - component: {fileID: -7798467533771758535}
   m_Layer: 0
   m_Name: Skull
   m_TagString: Enemy
@@ -281,8 +280,12 @@ MonoBehaviour:
   def: {fileID: 11400000, guid: 548a2a5aeba50704ea5cc0a27e124572, type: 2}
   OwnerPool: {fileID: 0}
   OriginDef: {fileID: 0}
+  visualConfig: {fileID: 11400000, guid: b74b503d5d79b214fac6b842977f1246, type: 2}
+  layerTagConfig: {fileID: 11400000, guid: 360721cc8a2ce7744865b16376345d96, type: 2}
+  generalConfig: {fileID: 11400000, guid: 0675f4ddd9492d040bfa5ca99f350e97, type: 2}
+  isEliteRuntime: 0
+  attackMul: 1
   faction: 0
-  spriteRenderer: {fileID: 4771822912836790722}
 --- !u!114 &1856190845716097845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,32 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3ce31feae16264ea2a4902ffb3bc16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDirectMove
-  col: {fileID: 3977251116467966046}
-  isAttack: 0
---- !u!114 &-4109213406353039527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6493144654010789595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 564c9f008f2a72c4083284248204bfe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyChaseAI
---- !u!114 &6677736109788831504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6493144654010789595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99bc440ec0b83d74694fc6b4d2fdefff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   col: {fileID: 3977251116467966046}
 --- !u!114 &-4532626991642224093
 MonoBehaviour:
@@ -373,3 +350,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d503c75759d0644958a30d6935c012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimation
+--- !u!114 &-7798467533771758535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6493144654010789595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2bcd0d13d4c2c34fa827189e86fb6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyVisual
+  visualConfig: {fileID: 11400000, guid: b74b503d5d79b214fac6b842977f1246, type: 2}

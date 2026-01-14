@@ -4,7 +4,7 @@ using UnityEngine;
 public class NearestEnemySelector : TargetSelector
 {
     // fallback 포함 가장 가까운 적 선택
-    public override Transform SelectTarget(EnemyCtrl me)
+    public override Transform SelectTarget(EnemyContext me)
     {
         Transform best = null;
         float bestSqr = float.PositiveInfinity;

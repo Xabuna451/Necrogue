@@ -86,6 +86,9 @@ public class PlayerHp : MonoBehaviour, IDamageable
         // - 사운드
         // - 넉백 트리거
         // 등을 연결하면 됨
+
+        GameManager.Instance.Pools.DamagePopups.Get(this.gameObject.transform.position + Vector3.up * 0.6f, damage, Color.red);
+
         player.UI.DamageFlashUI.Play();
         Debug.Log($"Player damaged: -{damage}, HP={CurrentHp}");
     }

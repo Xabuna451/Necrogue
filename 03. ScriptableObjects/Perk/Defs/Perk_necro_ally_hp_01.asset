@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2441a9ab1cd074da8adcdc789d5acd, type: 3}
+  m_Name: Perk_necro_ally_hp_01
+  m_EditorClassIdentifier: Assembly-CSharp::Necrogue.Perk.Data.PerkDef
+  perkId: necro_ally_hp_01
+  displayName: "\uB354\uB7EC\uC6B4 \uB625"
+  displayNameEvolution: 
+  description: "\uC6B0\uC6E9!"
+  descriptionEvolution: 
+  icon: {fileID: 1458100973602409867, guid: 7a95225ffba1d9b4984e7db7cb615fd1, type: 3}
+  category: 3
+  rarity: 0
+  weight: 1
+  maxStack: 10
+  effects:
+  - {fileID: 11400000, guid: 3e68a5e6735a36d4cb486e4238bf03ba, type: 2}

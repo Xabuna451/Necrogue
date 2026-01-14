@@ -21,7 +21,9 @@ public class DebugManager : MonoBehaviour
             DebugCommands.SetPlayerAttack(player, 10000);
 
         if (Input.GetKeyDown(KeyCode.F3))
-            DebugCommands.SkipTime(60f);
+            DebugCommands.FastTime(2f);
+        if (Input.GetKeyDown(KeyCode.F4))
+            DebugCommands.SlowTime(2f);
 #endif
     }
 }
@@ -42,9 +44,14 @@ public static class DebugCommands
         Debug.Log($"[DEBUG] Player ATK set to {atk}");
     }
 
-    public static void SkipTime(float seconds)
+    public static void FastTime(float seconds)
     {
-        Time.timeScale = 5f;
+        Time.timeScale += seconds;
         Debug.Log($"[DEBUG] Time scale boosted");
+    }
+    public static void SlowTime(float seconds)
+    {
+        Time.timeScale -= seconds;
+        Debug.Log($"[DEBUG] Time scale slowed");
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyReward : MonoBehaviour
 {
-    EnemyCtrl ctx;
+    EnemyContext ctx;
     EnemyHp hp;
 
     bool droppedThisLife;
@@ -12,7 +12,7 @@ public class EnemyReward : MonoBehaviour
 
     void Awake()
     {
-        ctx = GetComponent<EnemyCtrl>();
+        ctx = GetComponent<EnemyContext>();
         hp = GetComponent<EnemyHp>();
 
         if (!ctx) Debug.LogError("[EnemyReward] EnemyCtrl 없음");

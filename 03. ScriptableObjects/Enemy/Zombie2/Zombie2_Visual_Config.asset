@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193d8bb782d23be4ea02d0ffa71c98ed, type: 3}
+  m_Name: Zombie2_Visual_Config
+  m_EditorClassIdentifier: Assembly-CSharp::FactionVisualConfig
+  EnemyColor: {r: 1, g: 1, b: 1, a: 1}
+  AllyColor: {r: 0, g: 1, b: 1, a: 1}
+  CorpseColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+  EliteColor: {r: 1, g: 0, b: 0.8657131, a: 1}
+  EliteScaleMul: 1.5
+  ResurrectionGlow: {r: 0, g: 0.9, b: 1, a: 0.85}
+  CorpseAlphaMultiplier: 0.7

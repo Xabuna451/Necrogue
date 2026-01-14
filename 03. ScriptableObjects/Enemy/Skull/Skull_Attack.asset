@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d8e7d0abf968e40b5d880b9d2a4558, type: 3}
   m_Name: Skull_Attack
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackProfile
-  contactDamage: 1
-  attackDamage: 1
+  contactDamage: 5
+  attackDamage: 10
   attackRange: 1
   attackRate: 2

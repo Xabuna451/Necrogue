@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ChaseState : EnemyState
 {
-    public ChaseState(EnemyCtrl ctx) : base(ctx) { }
+    public ChaseState(EnemyContext ctx) : base(ctx) { }
 
     public override void Enter()
     {

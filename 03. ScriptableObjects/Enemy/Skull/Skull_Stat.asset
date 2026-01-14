@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3999820d6bdcd49b4fcc1035fc695a, type: 3}
   m_Name: Skull_Stat
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatAsset
-  maxHp: 3
+  maxHp: 30
   moveSpeed: 1
   underLevel: 0

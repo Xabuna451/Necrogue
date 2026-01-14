@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CorpseState : EnemyState
 {
-    public CorpseState(EnemyCtrl ctx) : base(ctx) { }
+    public CorpseState(EnemyContext ctx) : base(ctx) { }
 
     public override void Enter()
     {

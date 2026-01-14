@@ -8,7 +8,7 @@ public class EnemyPool : MonoBehaviour
     public EnemyDefAsset[] defs;
     public int initialEach = 20;
 
-    readonly Dictionary<EnemyDefAsset, Queue<EnemyCtrl>> pools = new();
+    readonly Dictionary<EnemyDefAsset, Queue<EnemyContext>> pools = new();
     bool initialized;
 
     public void Init(EnemyDefAsset[] enemyDefs, int sizeEach)
@@ -45,10 +45,10 @@ public class EnemyPool : MonoBehaviour
     void EnsurePool(EnemyDefAsset def)
     {
         if (!pools.ContainsKey(def))
-            pools.Add(def, new Queue<EnemyCtrl>());
+            pools.Add(def, new Queue<EnemyContext>());
     }
 
-    EnemyCtrl CreateNew(EnemyDefAsset def)
+    EnemyContext CreateNew(EnemyDefAsset def)
     {
         if (!def || !def.enemyPrefab)
         {
@@ -59,7 +59,7 @@ public class EnemyPool : MonoBehaviour
         var go = Instantiate(def.enemyPrefab, transform);
         go.gameObject.SetActive(false);
 
-        var e = go.GetComponent<EnemyCtrl>();
+        var e = go.GetComponent<EnemyContext>();
         if (!e)
         {
             Debug.LogError("[EnemyPool] def.prefab에 EnemyCtrl이 없음");
@@ -75,7 +75,7 @@ public class EnemyPool : MonoBehaviour
         return e;
     }
 
-    public EnemyCtrl GetEnemy(EnemyDefAsset def)
+    public EnemyContext GetEnemy(EnemyDefAsset def)
     {
         if (!initialized)
         {
@@ -106,7 +106,7 @@ public class EnemyPool : MonoBehaviour
         return e;
     }
 
-    public void Return(EnemyCtrl e)
+    public void Return(EnemyContext e)
     {
         if (!e) return;
 

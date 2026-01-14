@@ -3,14 +3,14 @@ using System;
 
 public class EnemyHp : MonoBehaviour, IDamageable
 {
-    [SerializeField] EnemyCtrl ctx;
+    [SerializeField] EnemyContext ctx;
 
     [Header("HP State")]
     [SerializeField] int hp;               // 현재 HP
 
     public int Hp => hp;
     public int MaxHp { get; private set; }
-    public int BaseMaxHp { get; private set; }   // ⭐ 기준값 (절대 변경 금지)
+    public int BaseMaxHp { get; private set; }
 
     bool dead;
     bool reserved;
@@ -30,7 +30,7 @@ public class EnemyHp : MonoBehaviour, IDamageable
     // ==================================================
     void Awake()
     {
-        if (!ctx) ctx = GetComponent<EnemyCtrl>();
+        if (!ctx) ctx = GetComponent<EnemyContext>();
     }
 
     // ==================================================
@@ -59,7 +59,6 @@ public class EnemyHp : MonoBehaviour, IDamageable
 
         MaxHp = maxHp;
 
-        // ⭐ 현재 HP는 절대 회복하지 않고, 초과만 방지
         hp = Mathf.Min(hp, MaxHp);
     }
 
@@ -68,6 +67,8 @@ public class EnemyHp : MonoBehaviour, IDamageable
     // ==================================================
     public void Damaged(int dmg)
     {
+        GameManager.Instance.Pools.DamagePopups.Get(this.gameObject.transform.position + Vector3.up * 0.6f, dmg, Color.white);
+
         if (dmg <= 0) return;
         if (dead) return;
 

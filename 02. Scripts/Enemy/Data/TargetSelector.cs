@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class TargetSelector : ScriptableObject
 {
-    public abstract Transform SelectTarget(EnemyCtrl ctx);
+    public abstract Transform SelectTarget(EnemyContext ctx);
 }

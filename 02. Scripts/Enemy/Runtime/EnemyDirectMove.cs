@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyDirectMove : MonoBehaviour, IEnemyMove
 {
-    EnemyCtrl ctx;
+    EnemyContext ctx;
     Rigidbody2D rb;
     [Header("공격 콜라이더 방향 전환")]
     [SerializeField] Collider2D col;
@@ -16,7 +16,7 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(EnemyCtrl ctx)
+    public void Init(EnemyContext ctx)
     {
         this.ctx = ctx;
         if (!rb) rb = GetComponent<Rigidbody2D>();
@@ -52,9 +52,9 @@ public class EnemyDirectMove : MonoBehaviour, IEnemyMove
         dir.Normalize();
         rb.linearVelocity = dir * ctx.def.stats.moveSpeed;
 
-        if (ctx.spriteRenderer)
+        if (ctx.Visual.SR)
         {
-            ctx.spriteRenderer.flipX = dir.x < 0f;
+            ctx.Visual.SR.flipX = dir.x < 0f;
         }
         if (col)
         {

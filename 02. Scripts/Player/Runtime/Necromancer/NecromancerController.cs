@@ -12,7 +12,7 @@ public class NecromancerController : MonoBehaviour
     [Header("Elite Undead?")]
     [SerializeField] private bool isEliteUndead = false;
 
-    readonly List<EnemyCtrl> undead = new();
+    readonly List<EnemyContext> undead = new();
     readonly HashSet<EnemyHp> reserved = new();
     readonly HashSet<EnemyHp> reanim = new();
 
@@ -58,7 +58,7 @@ public class NecromancerController : MonoBehaviour
         }
     }
 
-    void ApplyUndeadHp(EnemyCtrl ctrl, bool fullHeal)
+    void ApplyUndeadHp(EnemyContext ctrl, bool fullHeal)
     {
         var prof = stat ? stat.necromaner : null;
         if (!ctrl || !ctrl.def || prof == null) return;
@@ -79,7 +79,7 @@ public class NecromancerController : MonoBehaviour
         hp.Revive(newMaxHp, fullHeal);
     }
 
-    void ApplyUndeadAttack(EnemyCtrl ctrl)
+    void ApplyUndeadAttack(EnemyContext ctrl)
     {
         var prof = stat ? stat.necromaner : null;
         if (!ctrl || !ctrl.def || prof == null) return;
@@ -106,7 +106,7 @@ public class NecromancerController : MonoBehaviour
         var prof = stat ? stat.necromaner : null;
         if (prof == null) return false;
 
-        var enemy = hp.GetComponent<EnemyCtrl>();
+        var enemy = hp.GetComponent<EnemyContext>();
         if (!enemy || !enemy.def) return false;
 
         if (enemy.Faction != Faction.Corpse) return false;
@@ -132,7 +132,7 @@ public class NecromancerController : MonoBehaviour
         reserved.Remove(hp);
         reanim.Add(hp);
 
-        var ctrl = hp.GetComponent<EnemyCtrl>();
+        var ctrl = hp.GetComponent<EnemyContext>();
         if (ctrl) ctrl.StateMachine.SwitchState(EnemyStateType.Corpse);
 
         StartCoroutine(Reanimate(hp));
@@ -140,7 +140,7 @@ public class NecromancerController : MonoBehaviour
 
     IEnumerator Reanimate(EnemyHp hp)
     {
-        var ctrl = hp.GetComponent<EnemyCtrl>();
+        var ctrl = hp.GetComponent<EnemyContext>();
         if (!ctrl) { reanim.Remove(hp); yield break; }
 
         var prof = stat ? stat.necromaner : null;
@@ -170,7 +170,7 @@ public class NecromancerController : MonoBehaviour
     {
         if (diedAs != Faction.Ally) return;
 
-        var ctrl = hp.GetComponent<EnemyCtrl>();
+        var ctrl = hp.GetComponent<EnemyContext>();
         if (ctrl) undead.Remove(ctrl);
 
         hp.OnDied -= OnDied;

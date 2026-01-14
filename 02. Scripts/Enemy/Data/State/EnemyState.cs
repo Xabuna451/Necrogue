@@ -3,9 +3,9 @@ using UnityEngine;
 
 public abstract class EnemyState
 {
-    protected EnemyCtrl ctx;
+    protected EnemyContext ctx;
 
-    public EnemyState(EnemyCtrl ctx)
+    public EnemyState(EnemyContext ctx)
     {
         this.ctx = ctx;
     }
