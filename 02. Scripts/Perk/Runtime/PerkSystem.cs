@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 using Necrogue.Core.Domain.Mods;
@@ -6,9 +7,10 @@ using Necrogue.Core.Domain.Compose;
 using Necrogue.Core.Domain.Necro;
 using Necrogue.Core.Domain.Stats;
 
-using Necrogue.Perk.UI;
+using Necrogue.Game.Systems;
+using Necrogue.Common.Data;
 
-// PerkDef/PerkInstance/PerkEffect가 여기 있다면 필요
+using Necrogue.Perk.UI;
 using Necrogue.Perk.Data;
 
 namespace Necrogue.Perk.Runtime
@@ -16,13 +18,11 @@ namespace Necrogue.Perk.Runtime
     public class PerkSystem : MonoBehaviour
     {
         [SerializeField] private int basePickCount = 3;
-        public int PickCountBonus { get; private set; } = 0;   // 상점/메타에서 올리는 값
+        public int PickCountBonus { get; private set; } = 0;
 
         public int PickCount => Mathf.Max(1, basePickCount + PickCountBonus);
-        public void AddPickCountBonus(int bonus)
-        {
-            PickCountBonus = Mathf.Max(0, PickCountBonus + bonus);
-        }
+        public void AddPickCountBonus(int bonus) => PickCountBonus = Mathf.Max(0, PickCountBonus + bonus);
+
         // ==================================================
         // [0] Config / UI
         // ==================================================
@@ -36,17 +36,35 @@ namespace Necrogue.Perk.Runtime
         // [1] State
         // ==================================================
         private readonly Dictionary<string, PerkInstance> ownedPerks = new();
+        private readonly List<string> acquiredOrder = new();
 
         private readonly List<StatMod> statMods = new();
         private readonly List<NecroMod> necroMods = new();
 
-        // 플레이어는 명시(풀네임)
         private Necrogue.Player.Runtime.Player player;
+
+        // UI/ESC창 갱신용
+        public event Action OnPerksChanged;
 
         // ==================================================
         // [2] Init
         // ==================================================
         public void Init(Necrogue.Player.Runtime.Player p) => player = p;
+
+        // ==================================================
+        // [UI] Owned perks (획득 순서대로)
+        // ==================================================
+        public IEnumerable<(PerkDef def, int stack)> EnumerateOwnedPerksByAcquireOrder()
+        {
+            for (int i = 0; i < acquiredOrder.Count; i++)
+            {
+                string id = acquiredOrder[i];
+                if (!ownedPerks.TryGetValue(id, out var inst)) continue;
+                if (inst == null || inst.def == null) continue;
+
+                yield return (inst.def, inst.stack);
+            }
+        }
 
         // ==================================================
         // [3] Level Up -> UI Open
@@ -55,7 +73,11 @@ namespace Necrogue.Perk.Runtime
         {
             var picks = RollPerks(PickCount);
             perkSelectUI.Open(picks, this);
-            Time.timeScale = 0f;
+
+            // Time.timeScale 여기서 만지지 말 것
+            // GameManager의 RuntimeState로 올려서 "멈춘 이유"를 명확히
+            if (GameManager.Instance != null)
+                GameManager.Instance.SetRuntimeState(RuntimeState.LevelUp);
         }
 
         // ==================================================
@@ -65,10 +87,13 @@ namespace Necrogue.Perk.Runtime
         {
             if (perk == null) return;
 
+            bool firstAcquire = false;
+
             if (!ownedPerks.TryGetValue(perk.perkId, out var inst))
             {
                 inst = new PerkInstance(perk);
                 ownedPerks.Add(perk.perkId, inst);
+                firstAcquire = true;
             }
             else
             {
@@ -78,29 +103,39 @@ namespace Necrogue.Perk.Runtime
                 // ownedPerks[perk.perkId] = inst;
             }
 
-            // 먼저 계산 후 즉발효과 발동. 먼저 계산 안하면 MaxAdd30 됐을 때 체력 먼저 차고 그 다음 최대체력 늘어남 
+            // 최초 획득일 때만 히스토리에 추가
+            if (firstAcquire)
+                acquiredOrder.Add(perk.perkId);
+
+            // 먼저 계산 후 즉발효과 발동(너 주석 의도 유지)
             RecalculateAll();
 
-            foreach (var eff in perk.effects)
+            // null 안전 + perk.effects null일 수도 있으니 체크
+            if (perk.effects != null)
             {
-                eff?.OnAcquire(player, inst.stack);
+                foreach (var eff in perk.effects)
+                    eff?.OnAcquire(player, inst.stack);
             }
 
-            Time.timeScale = 1f;
+            // UI 갱신 이벤트
+            OnPerksChanged?.Invoke();
+
+            // Time.timeScale 여기서 만지지 말 것
+            // LevelUp 끝났으니 Playing 복귀(단, GameOver 같은 상태면 건드리면 안됨)
+            if (GameManager.Instance != null && GameManager.Instance.RuntimeState == RuntimeState.LevelUp)
+                GameManager.Instance.SetRuntimeState(RuntimeState.Playing);
         }
 
         // ==================================================
-        // [5] Recalculate (Perk List -> Mods -> Compose -> Apply)
+        // [5] Recalculate
         // ==================================================
         public void RecalculateAll()
         {
             if (player == null || player.Stats == null) return;
 
-            // 1) Base -> Runtime 복사
             player.RuntimeStats.SetFromBase(player.Stats);
             player.NecroRuntime.Reset();
 
-            // 2) Mods 수집
             statMods.Clear();
             necroMods.Clear();
 
@@ -112,17 +147,14 @@ namespace Necrogue.Perk.Runtime
                 foreach (var eff in inst.def.effects)
                 {
                     if (eff == null) continue;
-
                     eff.CollectStat(statMods, inst.stack);
                     eff.CollectNecro(necroMods, inst.stack);
                 }
             }
 
-            // 3) 합성 적용
             StatComposer.Apply(player.RuntimeStats, statMods);
             NecroComposer.Apply(player.NecroRuntime, necroMods);
 
-            // 4) Player에 반영
             player.ApplyRuntimeStats();
         }
 
@@ -133,7 +165,6 @@ namespace Necrogue.Perk.Runtime
         {
             count = Mathf.Max(1, count);
 
-            // 후보 풀: maxStack 도달 제외
             var pool = new List<PerkDef>();
             foreach (var p in allPerks)
             {
@@ -142,7 +173,6 @@ namespace Necrogue.Perk.Runtime
                 pool.Add(p);
             }
 
-            // 실제로 뽑을 수 있는 만큼만
             int n = Mathf.Min(count, pool.Count);
             var result = new PerkDef[n];
 
@@ -162,11 +192,10 @@ namespace Necrogue.Perk.Runtime
             for (int i = 0; i < pool.Count; i++)
                 total += Mathf.Max(0f, pool[i].weight);
 
-            // 전부 0이면 균등
             if (total <= 0.0001f)
-                return Random.Range(0, pool.Count);
+                return UnityEngine.Random.Range(0, pool.Count);
 
-            float r = Random.Range(0f, total);
+            float r = UnityEngine.Random.Range(0f, total);
             float acc = 0f;
 
             for (int i = 0; i < pool.Count; i++)
@@ -190,7 +219,5 @@ namespace Necrogue.Perk.Runtime
             int stack = GetStack(perk.perkId);
             return stack >= Mathf.Max(1, perk.maxStack);
         }
-
-
     }
 }

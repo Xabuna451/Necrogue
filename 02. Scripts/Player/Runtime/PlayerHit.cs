@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Necrogue.Player.Runtime;
+using Necrogue.Common.Interfaces;
 
 public class PlayerHit : MonoBehaviour
 {

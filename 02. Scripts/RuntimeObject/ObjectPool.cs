@@ -1,33 +1,46 @@
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+using Necrogue.Game.CombatUI;
+
+using Necrogue.Enemy.Runtime;
+using Necrogue.Enemy.Data;
+
+using Necrogue.Player.Runtime;
+
+using Necrogue.Weapon.Runtime;
+
+
+namespace Necrogue.RuntimeObject
 {
-    [SerializeField] EnemyPool enemyPool;
-    [SerializeField] PlayerBulletPool playerBulletPool;
-    [SerializeField] RewardPool rewardPool;
-    [SerializeField] DamagePopupPool damagePopupPool;
-
-
-
-    public EnemyPool Enemies => enemyPool;
-    public PlayerBulletPool Bullets => playerBulletPool;
-    public RewardPool Rewards => rewardPool;
-    public DamagePopupPool DamagePopups => damagePopupPool;
-    bool initialized;
-
-    public void Init(
-        EnemyDefAsset[] enemyDefs, int enemyEach,
-        PlayerBullet bulletPrefab, int bulletSize,
-        Exp expPrefab, Gold goldPrefab, int rewardEach
-    )
+    public class ObjectPool : MonoBehaviour
     {
-        if (initialized) return;
+        [SerializeField] EnemyPool enemyPool;
+        [SerializeField] PlayerBulletPool playerBulletPool;
+        [SerializeField] RewardPool rewardPool;
+        [SerializeField] DamagePopupPool damagePopupPool;
 
-        enemyPool?.Init(enemyDefs, enemyEach);
-        playerBulletPool?.Init(bulletPrefab, bulletSize);
-        rewardPool?.Init(expPrefab, goldPrefab, rewardEach);
-        damagePopupPool?.Init();
 
-        initialized = true;
+
+        public EnemyPool Enemies => enemyPool;
+        public PlayerBulletPool Bullets => playerBulletPool;
+        public RewardPool Rewards => rewardPool;
+        public DamagePopupPool DamagePopups => damagePopupPool;
+        bool initialized;
+
+        public void Init(
+            EnemyDefAsset[] enemyDefs, int enemyEach,
+            PlayerBullet bulletPrefab, int bulletSize,
+            Exp expPrefab, Gold goldPrefab, int rewardEach
+        )
+        {
+            if (initialized) return;
+
+            enemyPool?.Init(enemyDefs, enemyEach);
+            playerBulletPool?.Init(bulletPrefab, bulletSize);
+            rewardPool?.Init(expPrefab, goldPrefab, rewardEach);
+            damagePopupPool?.Init();
+
+            initialized = true;
+        }
     }
 }

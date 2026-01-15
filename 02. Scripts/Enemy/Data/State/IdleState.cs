@@ -1,32 +1,39 @@
 using UnityEngine;
 
-public class IdleState : EnemyState
+
+using Necrogue.Enemy.Runtime;
+
+namespace Necrogue.Enemy.Data.States
 {
-    public IdleState(EnemyContext ctx) : base(ctx) { }
 
-    public override void Enter()
+    public class IdleState : EnemyState
     {
-        ctx.Move.Stop();
-        ctx.Animation.SetMove(false);
-        ctx.ClearTarget();
-        //Debug.Log($"[IdleState] {ctx.name} ({ctx.Faction}) entered Idle");
-    }
+        public IdleState(EnemyContext ctx) : base(ctx) { }
 
-    public override void Tick()
-    {
-        // 안전장치: def 확인
-        if (ctx.def == null)
+        public override void Enter()
         {
-            //Debug.LogWarning($"[IdleState] {ctx.name} - def is null, cannot retarget");
-            return;
+            ctx.Move.Stop();
+            ctx.Animation.SetMove(false);
+            ctx.ClearTarget();
+            //Debug.Log($"[IdleState] {ctx.name} ({ctx.Faction}) entered Idle");
         }
 
-        ctx.Retarget();
-
-        if (ctx.Target != null && ctx.IsValidTarget(ctx.Target))
+        public override void Tick()
         {
-            //Debug.Log($"[IdleState] {ctx.name} ({ctx.Faction}) found target: {ctx.Target.name}, switching to Chase");
-            ctx.StateMachine.SwitchState(EnemyStateType.Chase);
+            // 안전장치: def 확인
+            if (ctx.def == null)
+            {
+                //Debug.LogWarning($"[IdleState] {ctx.name} - def is null, cannot retarget");
+                return;
+            }
+
+            ctx.Retarget();
+
+            if (ctx.Target != null && ctx.IsValidTarget(ctx.Target))
+            {
+                //Debug.Log($"[IdleState] {ctx.name} ({ctx.Faction}) found target: {ctx.Target.name}, switching to Chase");
+                ctx.StateMachine.SwitchState(EnemyStateType.Chase);
+            }
         }
     }
 }

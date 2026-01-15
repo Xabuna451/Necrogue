@@ -1,28 +1,33 @@
 using System.Collections.Generic;
 
-public class EnemyStateMachine
+using Necrogue.Enemy.Runtime;
+
+namespace Necrogue.Enemy.Data.States
 {
-    private EnemyContext ctx;
-    private Dictionary<EnemyStateType, EnemyState> states = new();
-    public EnemyState CurrentState { get; private set; }
-
-    public EnemyStateMachine(EnemyContext ctx)
+    public class EnemyStateMachine
     {
-        this.ctx = ctx;
-        states.Add(EnemyStateType.Idle, new IdleState(ctx));
-        states.Add(EnemyStateType.Chase, new ChaseState(ctx));
-        states.Add(EnemyStateType.Attack, new AttackState(ctx));
-        states.Add(EnemyStateType.Dead, new DeadState(ctx));
-        states.Add(EnemyStateType.Corpse, new CorpseState(ctx));
-        states.Add(EnemyStateType.Revive, new ReviveState(ctx));
+        private EnemyContext ctx;
+        private Dictionary<EnemyStateType, EnemyState> states = new();
+        public EnemyState CurrentState { get; private set; }
 
-        SwitchState(EnemyStateType.Idle);  // 초기 상태
-    }
+        public EnemyStateMachine(EnemyContext ctx)
+        {
+            this.ctx = ctx;
+            states.Add(EnemyStateType.Idle, new IdleState(ctx));
+            states.Add(EnemyStateType.Chase, new ChaseState(ctx));
+            states.Add(EnemyStateType.Attack, new AttackState(ctx));
+            states.Add(EnemyStateType.Dead, new DeadState(ctx));
+            states.Add(EnemyStateType.Corpse, new CorpseState(ctx));
+            states.Add(EnemyStateType.Revive, new ReviveState(ctx));
 
-    public void SwitchState(EnemyStateType newType)
-    {
-        CurrentState?.Exit();
-        CurrentState = states[newType];
-        CurrentState.Enter();
+            SwitchState(EnemyStateType.Idle);  // 초기 상태
+        }
+
+        public void SwitchState(EnemyStateType newType)
+        {
+            CurrentState?.Exit();
+            CurrentState = states[newType];
+            CurrentState.Enter();
+        }
     }
 }

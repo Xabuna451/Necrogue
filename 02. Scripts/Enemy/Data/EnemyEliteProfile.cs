@@ -1,15 +1,18 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemy/EnemyEliteProfile")]
-public class EnemyEliteProfile : ScriptableObject
+namespace Necrogue.Enemy.Data
 {
-    public EnemyDefAsset original;
+    [CreateAssetMenu(menuName = "Enemy/EnemyEliteProfile")]
+    public class EnemyEliteProfile : ScriptableObject
+    {
+        public EnemyDefAsset original;
 
-    [Header("스탯 배율")]
-    public float hpMul = 2.5f;
-    public float atkMul = 1.5f;
-    public float moveMul = 1.1f;
+        [Header("스탯 배율")]
+        public float hpMul = 2.5f;
+        public float atkMul = 1.5f;
+        public float moveMul = 1.1f;
 
-    [Header("보상 배율")]
-    public float rewardMul = 2.0f;
+        [Header("보상 배율")]
+        public float rewardMul = 2.0f;
+    }
 }

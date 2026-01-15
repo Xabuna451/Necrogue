@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public enum EnemyStateType
+namespace Necrogue.Enemy.Data.States
 {
-    Idle,
-    Chase,
-    Attack,
-    Dead,
-    Corpse,
-    Revive,
+
+    public enum EnemyStateType
+    {
+        Idle,
+        Chase,
+        Attack,
+        Dead,
+        Corpse,
+        Revive,
+    }
 }

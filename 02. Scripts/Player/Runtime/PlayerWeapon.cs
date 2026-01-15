@@ -2,6 +2,10 @@ using UnityEngine;
 
 using Necrogue.Player.Runtime;
 
+using Necrogue.Game.Systems;
+
+using Necrogue.Weapon.Runtime;
+
 public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private Player player;

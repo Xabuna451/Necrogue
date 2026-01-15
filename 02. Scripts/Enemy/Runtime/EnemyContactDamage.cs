@@ -1,26 +1,31 @@
 using UnityEngine;
 
-public class EnemyContactDamage : MonoBehaviour, IDamageSource
+using Necrogue.Common.Interfaces;
+
+namespace Necrogue.Enemy.Runtime
 {
-    EnemyContext ctx;
-
-    public int Damage
+    public class EnemyContactDamage : MonoBehaviour, IDamageSource
     {
-        get
+        EnemyContext ctx;
+
+        public int Damage
         {
-            int dmg = ctx != null ? ctx.def.attack.contactDamage : 0;
-            return dmg;
+            get
+            {
+                int dmg = ctx != null ? ctx.def.attack.contactDamage : 0;
+                return dmg;
+            }
         }
-    }
-    public bool ConsumeOnHit => false;
+        public bool ConsumeOnHit => false;
 
-    public void Init(EnemyContext ctx)
-    {
-        this.ctx = ctx;
-    }
+        public void Init(EnemyContext ctx)
+        {
+            this.ctx = ctx;
+        }
 
-    public void Despawn()
-    {
-        // 몸박은 소멸하지 않음
+        public void Despawn()
+        {
+            // 몸박은 소멸하지 않음
+        }
     }
 }

@@ -1,21 +1,27 @@
 using UnityEngine;
 
-public class CorpseState : EnemyState
+using Necrogue.Enemy.Runtime;
+
+namespace Necrogue.Enemy.Data.States
 {
-    public CorpseState(EnemyContext ctx) : base(ctx) { }
 
-    public override void Enter()
+    public class CorpseState : EnemyState
     {
-        ctx.Move.Stop();
-        ctx.Animation?.SetMove(false);
+        public CorpseState(EnemyContext ctx) : base(ctx) { }
 
-        ctx.SetCollider(false);
-        ctx.ChangeFaction(Faction.Corpse, stopMove: false, retarget: false);
-    }
+        public override void Enter()
+        {
+            ctx.Move.Stop();
+            ctx.Animation?.SetMove(false);
+
+            ctx.SetCollider(false);
+            ctx.ChangeFaction(Faction.Corpse, stopMove: false, retarget: false);
+        }
 
 
-    public override void Tick()
-    {
-        // 아무것도 안 함 (네크로맨서가 직접 Revive 호출)
+        public override void Tick()
+        {
+            // 아무것도 안 함 (네크로맨서가 직접 Revive 호출)
+        }
     }
 }

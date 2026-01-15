@@ -2,145 +2,150 @@ using UnityEngine;
 using Necrogue.Core.Domain.Necro;
 using Necrogue.Player.Runtime;
 
-public class PlayerNecroController : MonoBehaviour
+using Necrogue.Enemy.Runtime;
+
+namespace Necrogue.Player.Runtime
 {
-    [SerializeField] NecroPerkState perkState;
-    [SerializeField] InputManager input;
-    [SerializeField] float findRange = 5f;
-
-    [Header("Layer")]
-    [SerializeField] LayerMask corpseLayer;   // 시체
-    [SerializeField] LayerMask undeadLayer;   // 언데드(Ally)
-
-    Player player;
-    [SerializeField] EnemyHp hoverCorpse;   // 가장 가까운 시체
-
-    public void Init(Player p, InputManager im)
+    public class PlayerNecroController : MonoBehaviour
     {
-        player = p;
-        input = im;
-    }
-    void Update()
-    {
-        FindNearestCorpse();
+        [SerializeField] NecroPerkState perkState;
+        [SerializeField] InputManager input;
+        [SerializeField] float findRange = 5f;
 
-        if (input.RightClick)
-            KillUndeadUnderMouse();
-    }
+        [Header("Layer")]
+        [SerializeField] LayerMask corpseLayer;   // 시체
+        [SerializeField] LayerMask undeadLayer;   // 언데드(Ally)
 
-    public void ApplyRuntime(NecroRuntimeParams p)
-    {
-        if (!perkState || p == null) return;
+        Player player;
+        [SerializeField] EnemyHp hoverCorpse;   // 가장 가까운 시체
 
-        // 1) NecroPerkState에 값 밀어넣기
-        perkState.SetAllyDamage(p.allyDamageMul, p.allyDamageAdd);
-        perkState.SetAllyHp(p.allyHpMul, p.allyHpAdd);
-        perkState.SetAllyCapBonus(p.allyCapAdd);
-
-        // 2) 즉시 반영: 현재 언데드 전부 재계산
-        RebuildAllUndeadStats();
-    }
-    void RebuildAllUndeadStats()
-    {
-        var hits = Physics2D.OverlapCircleAll(
-            player.transform.position,
-            100f,              // 전체 범위(충분히 크게)
-            undeadLayer
-        );
-
-        foreach (var h in hits)
+        public void Init(Player p, InputManager im)
         {
-            var ctrl = h.GetComponentInParent<EnemyContext>();
-            var hp = h.GetComponentInParent<EnemyHp>();
-
-            if (!ctrl || !hp) continue;
-            if (ctrl.Faction != Faction.Ally) continue;
-
-            ApplyUndeadStat(ctrl, hp);
+            player = p;
+            input = im;
         }
-    }
-    void ApplyUndeadStat(EnemyContext ctrl, EnemyHp hp)
-    {
-        var necroProfile = player.Stats.necromaner;
-        if (!necroProfile) return;
-
-        // === HP ===
-        int maxHp = NecroUndeadStatFormula.ComputeMaxHp(
-            hp.Hp,                 // EnemyStatAsset 기준값
-            necroProfile.hpMul,
-            perkState.AllyHpAdd,
-            perkState.AllyHpMul
-        );
-
-        hp.SetMaxHp(maxHp);
-
-        // === Attack ===
-        float atkMul = NecroUndeadStatFormula.ComputeAttackMul(
-            ctrl.def.attack.attackDamage,              // EnemyStatAsset 기준값
-            necroProfile.attackMul,
-            perkState.AllyDamageAdd,
-            perkState.AllyDamageMul
-        );
-
-        ctrl.SetAttackMul(atkMul);
-    }
-
-    void FindNearestCorpse()
-    {
-        if (!player) return;
-
-        Vector2 pos = player.transform.position;
-        var hits = Physics2D.OverlapCircleAll(pos, findRange, corpseLayer);
-
-        EnemyHp best = null;
-        float bestDist = float.MaxValue;
-
-        foreach (var h in hits)
+        void Update()
         {
-            var hp = h.GetComponentInParent<EnemyHp>();
-            if (!hp) continue;
+            FindNearestCorpse();
 
-            var ctrl = hp.GetComponent<EnemyContext>();
-            if (!ctrl || ctrl.Faction != Faction.Corpse) continue;
+            if (input.RightClick)
+                KillUndeadUnderMouse();
+        }
 
-            float d = (hp.transform.position - player.transform.position).sqrMagnitude;
-            if (d < bestDist)
+        public void ApplyRuntime(NecroRuntimeParams p)
+        {
+            if (!perkState || p == null) return;
+
+            // 1) NecroPerkState에 값 밀어넣기
+            perkState.SetAllyDamage(p.allyDamageMul, p.allyDamageAdd);
+            perkState.SetAllyHp(p.allyHpMul, p.allyHpAdd);
+            perkState.SetAllyCapBonus(p.allyCapAdd);
+
+            // 2) 즉시 반영: 현재 언데드 전부 재계산
+            RebuildAllUndeadStats();
+        }
+        void RebuildAllUndeadStats()
+        {
+            var hits = Physics2D.OverlapCircleAll(
+                player.transform.position,
+                100f,              // 전체 범위(충분히 크게)
+                undeadLayer
+            );
+
+            foreach (var h in hits)
             {
-                bestDist = d;
-                best = hp;
+                var ctrl = h.GetComponentInParent<EnemyContext>();
+                var hp = h.GetComponentInParent<EnemyHp>();
+
+                if (!ctrl || !hp) continue;
+                if (ctrl.Faction != Faction.Ally) continue;
+
+                ApplyUndeadStat(ctrl, hp);
             }
         }
+        void ApplyUndeadStat(EnemyContext ctrl, EnemyHp hp)
+        {
+            var necroProfile = player.Stats.necromaner;
+            if (!necroProfile) return;
 
-        SetHighlight(hoverCorpse, false);
-        hoverCorpse = best;
-        SetHighlight(hoverCorpse, true);
-    }
+            // === HP ===
+            int maxHp = NecroUndeadStatFormula.ComputeMaxHp(
+                hp.Hp,                 // EnemyStatAsset 기준값
+                necroProfile.hpMul,
+                perkState.AllyHpAdd,
+                perkState.AllyHpMul
+            );
 
-    void SetHighlight(EnemyHp hp, bool on)
-    {
-        if (!hp) return;
+            hp.SetMaxHp(maxHp);
 
-        var anim = hp.GetComponent<Animator>();
-        if (!anim) return;
+            // === Attack ===
+            float atkMul = NecroUndeadStatFormula.ComputeAttackMul(
+                ctrl.def.attack.attackDamage,              // EnemyStatAsset 기준값
+                necroProfile.attackMul,
+                perkState.AllyDamageAdd,
+                perkState.AllyDamageMul
+            );
 
-        //var smb = anim.GetBehaviour<CorpseStateSMB>();
-        //smb?.SetHighlight(on);
-    }
+            ctrl.SetAttackMul(atkMul);
+        }
 
-    // 2. 마우스 아래 언데드 즉사
-    void KillUndeadUnderMouse()
-    {
-        Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        void FindNearestCorpse()
+        {
+            if (!player) return;
 
-        var hit = Physics2D.Raycast(mouse, Vector2.zero, 0f, undeadLayer);
-        if (!hit.collider) return;
+            Vector2 pos = player.transform.position;
+            var hits = Physics2D.OverlapCircleAll(pos, findRange, corpseLayer);
 
-        var hp = hit.collider.GetComponentInParent<EnemyHp>();
-        var ctrl = hit.collider.GetComponentInParent<EnemyContext>();
-        if (!hp || !ctrl) return;
+            EnemyHp best = null;
+            float bestDist = float.MaxValue;
 
-        if (ctrl.Faction != Faction.Ally) return;
+            foreach (var h in hits)
+            {
+                var hp = h.GetComponentInParent<EnemyHp>();
+                if (!hp) continue;
 
-        hp.Damaged(999999);
+                var ctrl = hp.GetComponent<EnemyContext>();
+                if (!ctrl || ctrl.Faction != Faction.Corpse) continue;
+
+                float d = (hp.transform.position - player.transform.position).sqrMagnitude;
+                if (d < bestDist)
+                {
+                    bestDist = d;
+                    best = hp;
+                }
+            }
+
+            SetHighlight(hoverCorpse, false);
+            hoverCorpse = best;
+            SetHighlight(hoverCorpse, true);
+        }
+
+        void SetHighlight(EnemyHp hp, bool on)
+        {
+            if (!hp) return;
+
+            var anim = hp.GetComponent<Animator>();
+            if (!anim) return;
+
+            //var smb = anim.GetBehaviour<CorpseStateSMB>();
+            //smb?.SetHighlight(on);
+        }
+
+        // 2. 마우스 아래 언데드 즉사
+        void KillUndeadUnderMouse()
+        {
+            Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            var hit = Physics2D.Raycast(mouse, Vector2.zero, 0f, undeadLayer);
+            if (!hit.collider) return;
+
+            var hp = hit.collider.GetComponentInParent<EnemyHp>();
+            var ctrl = hit.collider.GetComponentInParent<EnemyContext>();
+            if (!hp || !ctrl) return;
+
+            if (ctrl.Faction != Faction.Ally) return;
+
+            hp.Damaged(999999);
+        }
     }
 }

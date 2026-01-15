@@ -1,16 +1,22 @@
 using UnityEngine;
 
 
-public abstract class EnemyState
+using Necrogue.Enemy.Runtime;
+
+namespace Necrogue.Enemy.Data.States
 {
-    protected EnemyContext ctx;
 
-    public EnemyState(EnemyContext ctx)
+    public abstract class EnemyState
     {
-        this.ctx = ctx;
-    }
+        protected EnemyContext ctx;
 
-    public virtual void Enter() { }
-    public virtual void Exit() { }
-    public virtual void Tick() { }
+        public EnemyState(EnemyContext ctx)
+        {
+            this.ctx = ctx;
+        }
+
+        public virtual void Enter() { }
+        public virtual void Exit() { }
+        public virtual void Tick() { }
+    }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 using Necrogue.Core.Domain.Stats;
 using Necrogue.Core.Domain.Necro;      // NecroRuntimeParams 쓴다면 필요
 using Necrogue.Perk.Runtime;
+using Necrogue.Weapon.Runtime;
+
 
 namespace Necrogue.Player.Runtime
 {

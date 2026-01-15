@@ -1,9 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemy/EnemyAI")]
-public class EnemyAIProfile : ScriptableObject
+namespace Necrogue.Enemy.Data
 {
-    public float chaseRange;
 
-    public float stopRange;
+    [CreateAssetMenu(menuName = "Enemy/EnemyAI")]
+    public class EnemyAIProfile : ScriptableObject
+    {
+        public float chaseRange;
+
+        public float stopRange;
+    }
 }
