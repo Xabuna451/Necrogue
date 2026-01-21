@@ -15,7 +15,7 @@ namespace Necrogue.Common.Debug
 
         void Update()
         {
-#if UNITY_EDITOR
+            //#if UNITY_EDITOR
             if (!player) return;
 
             if (Input.GetKeyDown(KeyCode.F1))
@@ -29,7 +29,13 @@ namespace Necrogue.Common.Debug
 
             if (Input.GetKeyDown(KeyCode.F4))
                 DebugCommands.AddTimeScale(-2f);
-#endif
+
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                var clock = FindFirstObjectByType<GameClock>();
+                clock.SetTimerZero();
+            }
+            //#endif
         }
     }
 

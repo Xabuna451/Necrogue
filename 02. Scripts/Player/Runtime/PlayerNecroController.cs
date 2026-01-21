@@ -8,6 +8,9 @@ namespace Necrogue.Player.Runtime
 {
     public class PlayerNecroController : MonoBehaviour
     {
+        [SerializeField] int necromancerLevel;
+        public int Level => necromancerLevel;
+
         [SerializeField] NecroPerkState perkState;
         [SerializeField] InputManager input;
         [SerializeField] float findRange = 5f;
@@ -23,6 +26,7 @@ namespace Necrogue.Player.Runtime
         {
             player = p;
             input = im;
+            necromancerLevel = player.Stats.necromaner.level;
         }
         void Update()
         {
@@ -126,12 +130,9 @@ namespace Necrogue.Player.Runtime
 
             var anim = hp.GetComponent<Animator>();
             if (!anim) return;
-
-            //var smb = anim.GetBehaviour<CorpseStateSMB>();
-            //smb?.SetHighlight(on);
         }
 
-        // 2. 마우스 아래 언데드 즉사
+        // 2. 마우스 아래 언데드 시체폭발
         void KillUndeadUnderMouse()
         {
             Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -145,7 +146,29 @@ namespace Necrogue.Player.Runtime
 
             if (ctrl.Faction != Faction.Ally) return;
 
+            Vector3 pos = hp.transform.position;
+
+            // 폭발 파라미터(일단 하드코딩, 나중에 퍼크 런타임 값으로 교체)
+            float radius = 2.5f;
+            int damage = 1557;
+
+            var gm = Necrogue.Game.Systems.GameManager.Instance;
+            if (gm != null && gm.Pools != null)
+                gm.Pools.UndeadExplosions?.Get(pos, radius, damage);
+
             hp.Damaged(999999);
+        }
+
+
+        // API
+
+        public void NecromancerLevelUp()
+        {
+            necromancerLevel++;
+        }
+        public void NecromancerLevelDown()
+        {
+            necromancerLevel--;
         }
     }
 }

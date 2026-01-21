@@ -18,6 +18,9 @@ namespace Necrogue.RuntimeObject
         [SerializeField] PlayerBulletPool playerBulletPool;
         [SerializeField] RewardPool rewardPool;
         [SerializeField] DamagePopupPool damagePopupPool;
+        [SerializeField] UndeadExplosionPool undeadExplosionPool;
+
+
 
 
 
@@ -25,6 +28,7 @@ namespace Necrogue.RuntimeObject
         public PlayerBulletPool Bullets => playerBulletPool;
         public RewardPool Rewards => rewardPool;
         public DamagePopupPool DamagePopups => damagePopupPool;
+        public UndeadExplosionPool UndeadExplosions => undeadExplosionPool;
         bool initialized;
 
         public void Init(

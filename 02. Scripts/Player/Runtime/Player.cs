@@ -176,5 +176,14 @@ namespace Necrogue.Player.Runtime
             // PlayerNecroController에 ApplyRuntime(NecroRuntimeParams)로 붙일 예정
             if (necroController) necroController.ApplyRuntime(NecroRuntime);
         }
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Necro.NecromancerLevelUp();
+            }
+        }
     }
+
+
 }

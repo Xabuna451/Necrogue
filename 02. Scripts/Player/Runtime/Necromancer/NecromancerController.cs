@@ -111,8 +111,17 @@ namespace Necrogue.Player.Runtime
             if (enemy.Faction != Faction.Corpse) return false;
             if (reserved.Contains(hp) || reanim.Contains(hp)) return false;
 
+            // 보스임?
             bool boss = enemy.def.boss != null;
             if (boss && !prof.bossOK) return false;
+
+            // 엘리트임?
+            bool elite = enemy.IsElite == true;
+            if (elite == true && !isEliteUndead) return false;
+
+            // 언데드 레벨 낮으면 리턴
+            var player = gameObject.GetComponentInParent<Player>();
+            if (player.Necro.Level < enemy.def.stats.underLevel) return false;
 
             if (Random.value >= prof.reviveChance) return false;
             Debug.Log($"[Necro] Slots={Slots}, Max={Max} (BaseMax={BaseMax}, CapBonus={(perk ? perk.AllyCapBonus : 0)})");

@@ -3,6 +3,8 @@ using System;
 
 using Necrogue.Player.Runtime;
 
+using Necrogue.Game.Sounds;
+
 public class PlayerExp : MonoBehaviour
 {
     private Player player;
@@ -44,13 +46,16 @@ public class PlayerExp : MonoBehaviour
         level++;
         maxExp *= growthMul;
 
+        SoundManager.Instance.PlaySFX(0);
+
+
         OnLeveledUp?.Invoke(level);
     }
 
     // =================================================================
     // 디버그
 
-#if UNITY_EDITOR
+    //#if UNITY_EDITOR
     public void DebugAddExp(int exp)
     {
         AddExp(exp);
@@ -62,6 +67,6 @@ public class PlayerExp : MonoBehaviour
         LevelUp();
     }
 
-#endif
+    //#endif
 
 }

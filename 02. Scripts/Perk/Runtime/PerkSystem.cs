@@ -13,6 +13,8 @@ using Necrogue.Common.Data;
 using Necrogue.Perk.UI;
 using Necrogue.Perk.Data;
 
+using Necrogue.Player.Runtime;
+
 namespace Necrogue.Perk.Runtime
 {
     public class PerkSystem : MonoBehaviour

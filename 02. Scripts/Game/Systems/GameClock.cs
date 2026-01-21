@@ -27,4 +27,9 @@ public class GameClock : MonoBehaviour
     {
         timer = 0f;
     }
+    public void SetTimerZero()
+    {
+        timer = 0f;
+        elapsed = 0f;
+    }
 }

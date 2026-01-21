@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 using PlayerType = Necrogue.Player.Runtime.Player;
 using Necrogue.Common.Data;
@@ -8,6 +9,8 @@ using Necrogue.RuntimeObject;
 using Necrogue.Enemy.Data;
 using Necrogue.Spawn;
 using Necrogue.Player.Runtime;
+using Unity.VisualScripting;
+using Necrogue.Game.Sounds;
 
 
 
@@ -55,6 +58,7 @@ namespace Necrogue.Game.Systems
 
         public ObjectPool Pools => pools;
 
+        SceneManager sceneManager;
         void Awake()
         {
             if (Instance && Instance != this) { Destroy(gameObject); return; }
@@ -124,14 +128,14 @@ namespace Necrogue.Game.Systems
 
         void Update()
         {
-#if UNITY_EDITOR
+            //#if UNITY_EDITOR
             // ============ 디버그 키 =============
 
             if (Input.GetKeyDown(KeyCode.P)) gameClock.SkipTime(60f);
             if (Input.GetKeyDown(KeyCode.L)) player.Exp.DebugLevelUp();
 
             // ===================================
-#endif
+            //#endif
         }
 
         EnemyDefAsset[] CollectDefs(EnemySpawnProfile prof)
@@ -189,7 +193,13 @@ namespace Necrogue.Game.Systems
             OnGameStateChanged?.Invoke(prev, state);
         }
 
-
+        public void GameOver()
+        {
+            SetRuntimeState(RuntimeState.GameOver);
+            SetPaused(true);
+            SceneManager.LoadScene("GameOver");
+            SoundManager.Instance.PlaySFX(2);
+        }
 
     }
 }

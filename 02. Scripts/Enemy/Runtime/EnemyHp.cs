@@ -5,6 +5,7 @@ using Necrogue.Game.Systems;
 using Necrogue.Player.Runtime;
 using Necrogue.Enemy.Data.States;
 using Necrogue.Common.Interfaces;
+using Necrogue.Game.Sounds;
 
 namespace Necrogue.Enemy.Runtime
 {
@@ -75,7 +76,7 @@ namespace Necrogue.Enemy.Runtime
         public void Damaged(int dmg)
         {
             GameManager.Instance.Pools.DamagePopups.Get(this.gameObject.transform.position + Vector3.up * 0.6f, dmg, Color.white);
-
+            SoundManager.Instance.PlaySFX(1);
             if (dmg <= 0) return;
             if (dead) return;
 
