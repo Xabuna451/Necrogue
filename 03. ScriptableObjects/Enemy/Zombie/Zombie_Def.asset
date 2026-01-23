@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 156d8d532fd003844a256cdb9d48f215, type: 3}
   m_Name: Zombie_Def
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDefAsset
-  id: 
-  displayName: 
-  description: 
+  id: 0
+  displayName: Zombie
+  description: "\uC77C\uBC18 \uC880\uBE44"
   enemyPrefab: {fileID: 6724649330577237413, guid: 44e10e1241d8f0a49a342ba01fe0585e, type: 3}
   stats: {fileID: 11400000, guid: 071375ddcb175ae499571352c19d5101, type: 2}
   attack: {fileID: 11400000, guid: c89c6edfa0acf4c48ab6d524a4b547b6, type: 2}

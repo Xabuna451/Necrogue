@@ -35,6 +35,7 @@ namespace Necrogue.Perk.Data
         public string descriptionEvolution; // 진화버전 설명
 
         public Sprite icon;
+        public Sprite iconEvolution;
 
         [Header("분류")]
         public PerkCategory category;      // Attack / Survival / Utility / Necro

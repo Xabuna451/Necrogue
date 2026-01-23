@@ -16,6 +16,7 @@ namespace Necrogue.Player.Runtime
 
         [Header("Elite Undead?")]
         [SerializeField] private bool isEliteUndead = false;
+        [SerializeField] private bool isBossUndead = false;
 
         readonly List<EnemyContext> undead = new();
         readonly HashSet<EnemyHp> reserved = new();
@@ -113,17 +114,19 @@ namespace Necrogue.Player.Runtime
 
             // 보스임?
             bool boss = enemy.def.boss != null;
-            if (boss && !prof.bossOK) return false;
+            // 보스 언데드 가능함?
+            if (boss && !prof.bossOK && !isBossUndead) return false;
 
             // 엘리트임?
             bool elite = enemy.IsElite == true;
+            // 엘리트 언데드 가능함?
             if (elite == true && !isEliteUndead) return false;
 
             // 언데드 레벨 낮으면 리턴
             var player = gameObject.GetComponentInParent<Player>();
             if (player.Necro.Level < enemy.def.stats.underLevel) return false;
 
-            if (Random.value >= prof.reviveChance) return false;
+            if (Random.value >= prof.reviveTime) return false;
             Debug.Log($"[Necro] Slots={Slots}, Max={Max} (BaseMax={BaseMax}, CapBonus={(perk ? perk.AllyCapBonus : 0)})");
             if (!HasSlot) return false;
 
@@ -193,6 +196,11 @@ namespace Necrogue.Player.Runtime
         public void EliteUndead(bool on)
         {
             isEliteUndead = on;
+        }
+
+        public void BossUndead(bool on)
+        {
+            isBossUndead = on;
         }
     }
 }

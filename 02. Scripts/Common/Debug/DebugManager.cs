@@ -25,10 +25,10 @@ namespace Necrogue.Common.Debug
                 DebugCommands.SetPlayerAttack(player, 10000);
 
             if (Input.GetKeyDown(KeyCode.F3))
-                DebugCommands.AddTimeScale(+2f);
+                DebugCommands.AddTimeScale(+1f);
 
             if (Input.GetKeyDown(KeyCode.F4))
-                DebugCommands.AddTimeScale(-2f);
+                DebugCommands.AddTimeScale(-1f);
 
             if (Input.GetKeyDown(KeyCode.Y))
             {

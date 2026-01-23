@@ -217,9 +217,7 @@ namespace Necrogue.Enemy.Runtime
             // 공격: 현재 구조는 "attackMul"이므로 배율로 반영
             attackMul = Mathf.Max(0.01f, elite.atkMul);
 
-            // 이동속도: 네 Move 구현에 따라 달라서 2가지 중 하나 선택해야 함.
-            // 1) BaseStats.moveSpeed만 바꾸는 건 의미 없을 수 있음(컴포넌트가 이미 값을 복사했을 수도).
-            // 2) 가장 안전한 방법: Move/DirectMove에 SetSpeedMul 같은 API를 만든다(추천).
+            // 가장 안전한 이동속도 방법: Move/DirectMove에 SetSpeedMul 같은 API를 만든다(추천).
             // 지금 당장은 TODO로 두고, 속도는 나중에.
             // TODO: directMove?.SetSpeedMul(elite.moveMul);
         }

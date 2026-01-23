@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193d8bb782d23be4ea02d0ffa71c98ed, type: 3}
   m_Name: Skull_Visual_Config
   m_EditorClassIdentifier: Assembly-CSharp::FactionVisualConfig
+  undeadSprite: {fileID: 7874434345779764751, guid: 310a1032930cbed439dafe294775f602, type: 3}
   EnemyColor: {r: 1, g: 1, b: 1, a: 1}
   AllyColor: {r: 0, g: 1, b: 1, a: 1}
   CorpseColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
   EliteColor: {r: 1, g: 0.4, b: 0.2, a: 1}
+  EliteScaleMul: 1.5
   ResurrectionGlow: {r: 0, g: 0.9, b: 1, a: 0.85}
   CorpseAlphaMultiplier: 0.7

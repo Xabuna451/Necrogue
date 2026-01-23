@@ -12,8 +12,8 @@ public class NecromancerProfile : ScriptableObject
     [Header("부활 딜레이")]
     public float reviveDelay = 5f;
 
-    [Header("부활 확률")]
-    public float reviveChance = 0.25f;
+    [Header("부활 쿨타임")]
+    public float reviveTime = 5f;
 
     [Header("부활 스탯 계수")]
     public float hpMul = 0.5f;

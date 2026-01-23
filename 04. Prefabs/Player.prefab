@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f0c0e95b607f84a8dac8219b3f55f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerNecroController
+  necromancerLevel: 0
   perkState: {fileID: 5115147283949410406}
   input: {fileID: 0}
   findRange: 5
@@ -395,10 +396,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PerkSystem
   basePickCount: 3
   allPerks:
-  - {fileID: 11400000, guid: 01ef3838052dea94bb05824abfadce1b, type: 2}
-  - {fileID: 11400000, guid: 7187ac3d7f7b82f45979fdea5d6775b9, type: 2}
-  - {fileID: 11400000, guid: 5943e1e42ba67d24da03e69076f9aba2, type: 2}
-  - {fileID: 11400000, guid: 8eb4705a9fc2d98459fa9b6c3c06a85b, type: 2}
+  - {fileID: 11400000, guid: dd0d9e98b1824074c9b42834938d6838, type: 2}
+  - {fileID: 11400000, guid: f3967d396bf1ac34c98fb9624bef75a2, type: 2}
+  - {fileID: 11400000, guid: 4b7454e2a5e62f047862c881c826456f, type: 2}
+  - {fileID: 11400000, guid: 5eea7c2f930746848a4b013488766657, type: 2}
+  - {fileID: 11400000, guid: 253ca401962a8d8488e5754dd698ce4d, type: 2}
+  - {fileID: 11400000, guid: 5a3354a4efc673b4f8f4513770e1f827, type: 2}
+  - {fileID: 11400000, guid: 90b22f7f028bcb94e93484e4d00ae4d3, type: 2}
   perkSelectUI: {fileID: 0}
 --- !u!1 &4118952069031758023
 GameObject:
@@ -556,6 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NecromancerController
   stat: {fileID: 11400000, guid: dbf29cbd0a17af54e9a40006c6a1f053, type: 2}
   perk: {fileID: 5115147283949410406}
+  isEliteUndead: 0
 --- !u!114 &5115147283949410406
 MonoBehaviour:
   m_ObjectHideFlags: 0

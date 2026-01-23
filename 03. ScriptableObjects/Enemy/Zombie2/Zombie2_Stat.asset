@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatAsset
   maxHp: 30
   moveSpeed: 1.2
-  underLevel: 0
+  underLevel: 5

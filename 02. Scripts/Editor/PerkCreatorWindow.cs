@@ -11,7 +11,7 @@ using Necrogue.Core.Domain.Necro; // NecroParam
 public class PerkCreatorWindow : EditorWindow
 {
     // ─────────────────────────────────────────────
-    // Paths (너가 추천한 구조 기반)
+    // Paths
     // ─────────────────────────────────────────────
     private const string DefaultPerkDefFolder = "Assets/03. ScriptableObjects/Perk/Defs";
     private const string DefaultEffectNecroFolder = "Assets/03. ScriptableObjects/Perk/Effects/Necro";

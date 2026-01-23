@@ -17,8 +17,9 @@ MonoBehaviour:
   displayNameEvolution: "\uB9DB\uC18C\uAE08"
   description: "\uC18C\uAE08\uC774\uB2E4.\n\uD50C\uB808\uC774\uC5B4\uC758 \uCCB4\uB825\uC744
     \uC62C\uB824\uC900\uB2E4."
-  descriptionEvolution: 
+  descriptionEvolution: "\u3148\u3134 \uB9DB\uC788\uB294 \uC18C\uAE08."
   icon: {fileID: -1162442978445507191, guid: d82023671473ce04cabd6436ad1ceb21, type: 3}
+  iconEvolution: {fileID: 0}
   category: 1
   rarity: 0
   weight: 1

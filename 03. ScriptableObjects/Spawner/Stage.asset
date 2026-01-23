@@ -13,12 +13,42 @@ MonoBehaviour:
   m_Name: Stage
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnProfile
   stages:
+  - time: 0
+    delay: 0.2
+    maxAlive: 10
+    eliteChance: 0.2
+    maxEliteAlive: 10
+    table:
+    - def: {fileID: 11400000, guid: aed9dbf0f7f8bcf438bb87e06e009e2d, type: 2}
+      weight: 1
+      elite: {fileID: 11400000, guid: 367d69601677be54581a0528a52ef053, type: 2}
   - time: 60
-    delay: 1
-    maxAlive: 3
-    eliteChance: 0.5
-    maxEliteAlive: 2
+    delay: 0.2
+    maxAlive: 30
+    eliteChance: 0.2
+    maxEliteAlive: 5
     table:
     - def: {fileID: 11400000, guid: a020c1a17def44c48b816522c3a584fc, type: 2}
       weight: 1
       elite: {fileID: 11400000, guid: ab0ca447eb9114a4ba2532f36ca25934, type: 2}
+    - def: {fileID: 11400000, guid: aed9dbf0f7f8bcf438bb87e06e009e2d, type: 2}
+      weight: 1
+      elite: {fileID: 11400000, guid: 367d69601677be54581a0528a52ef053, type: 2}
+  - time: 120
+    delay: 0.2
+    maxAlive: 30
+    eliteChance: 0.2
+    maxEliteAlive: 5
+    table:
+    - def: {fileID: 11400000, guid: a020c1a17def44c48b816522c3a584fc, type: 2}
+      weight: 1
+      elite: {fileID: 11400000, guid: ab0ca447eb9114a4ba2532f36ca25934, type: 2}
+  - time: 180
+    delay: 0.2
+    maxAlive: 50
+    eliteChance: 0.2
+    maxEliteAlive: 5
+    table:
+    - def: {fileID: 11400000, guid: 548a2a5aeba50704ea5cc0a27e124572, type: 2}
+      weight: 1
+      elite: {fileID: 11400000, guid: e560d478090529c4b8a96936dc3cb8a1, type: 2}
