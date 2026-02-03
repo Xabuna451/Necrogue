@@ -25,15 +25,17 @@ namespace Necrogue.Game.Sounds
 
         private void Awake()
         {
-            // 싱글톤
+            var root = transform.root.gameObject;
+
             if (Instance != null && Instance != this)
             {
-                Destroy(gameObject);
+                Debug.LogWarning($"[Singleton] Duplicate {typeof(SoundManager).Name} detected. Destroying root: {root.name}");
+                Destroy(root);
                 return;
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(root);
 
             // AudioSource 자동 할당
             AudioSource[] sources = GetComponents<AudioSource>();

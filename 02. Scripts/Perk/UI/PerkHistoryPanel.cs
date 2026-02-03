@@ -18,8 +18,7 @@ namespace Necrogue.Perk.UI
         {
             if (!perkSystem)
             {
-                // Player에서 perkSystem 들고 있으면 그쪽으로 붙여도 됨
-                // 우선 런타임에서 찾기(포폴용으론 SerializeField 할당 추천)
+                // 씬에 PerkSystem이 하나뿐이라서 찾아서 연결
                 perkSystem = FindFirstObjectByType<PerkSystem>();
             }
         }

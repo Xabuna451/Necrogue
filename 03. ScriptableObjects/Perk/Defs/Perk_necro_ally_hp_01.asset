@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Necrogue.Perk.Data.PerkDef
   perkId: necro_ally_hp_01
   displayName: "\uB354\uB7EC\uC6B4 \uB625"
-  displayNameEvolution: 
-  description: "\uC6B0\uC6E9!"
-  descriptionEvolution: 
+  description: "\uC6B0\uC6E9!\n"
   icon: {fileID: 1458100973602409867, guid: 7a95225ffba1d9b4984e7db7cb615fd1, type: 3}
+  canEvolve: 0
+  displayNameEvolution: 
+  descriptionEvolution: 
+  iconEvolution: {fileID: 0}
   category: 3
   rarity: 0
   weight: 1

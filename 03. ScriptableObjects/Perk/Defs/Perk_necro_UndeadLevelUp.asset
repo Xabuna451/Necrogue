@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2441a9ab1cd074da8adcdc789d5acd, type: 3}
   m_Name: Perk_necro_UndeadLevelUp
   m_EditorClassIdentifier: Assembly-CSharp::Necrogue.Perk.Data.PerkDef
-  perkId: 
+  perkId: player_undead_level_01
   displayName: "\uC5B8\uB370\uB4DC \uB808\uBCA8\uC5C5"
-  displayNameEvolution: 
   description: "\uC5B8\uB370\uB4DC \uB808\uBCA8 \uC62C\uB77C\uAC10"
-  descriptionEvolution: 
   icon: {fileID: 8966198670800855379, guid: 192263508aa31124b97770564f4ad396, type: 3}
+  canEvolve: 0
+  displayNameEvolution: 
+  descriptionEvolution: 
+  iconEvolution: {fileID: 0}
   category: 0
   rarity: 2
   weight: 1

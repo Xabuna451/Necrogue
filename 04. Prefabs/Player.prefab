@@ -403,6 +403,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 253ca401962a8d8488e5754dd698ce4d, type: 2}
   - {fileID: 11400000, guid: 5a3354a4efc673b4f8f4513770e1f827, type: 2}
   - {fileID: 11400000, guid: 90b22f7f028bcb94e93484e4d00ae4d3, type: 2}
+  - {fileID: 11400000, guid: 763cdbed89862364fa8f2c5a62c5991f, type: 2}
+  - {fileID: 11400000, guid: 6170983e5cc73e54d98bdbab8f5938dd, type: 2}
+  rarityTable: {fileID: 11400000, guid: 033cd8fc76aad574cb8a67856ab446b5, type: 2}
   perkSelectUI: {fileID: 0}
 --- !u!1 &4118952069031758023
 GameObject:
@@ -561,6 +564,7 @@ MonoBehaviour:
   stat: {fileID: 11400000, guid: dbf29cbd0a17af54e9a40006c6a1f053, type: 2}
   perk: {fileID: 5115147283949410406}
   isEliteUndead: 0
+  isBossUndead: 0
 --- !u!114 &5115147283949410406
 MonoBehaviour:
   m_ObjectHideFlags: 0

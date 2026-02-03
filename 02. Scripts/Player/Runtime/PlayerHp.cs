@@ -101,6 +101,7 @@ namespace Necrogue.Player.Runtime
         {
             Debug.Log("Player Dead");
             GameManager.Instance.GameOver();
+            SaveManager.Instance.AddDeath(1);
             // 여기서:
             // - 입력 비활성화
             // - 사망 애니메이션

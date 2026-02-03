@@ -26,15 +26,17 @@ namespace Necrogue.Perk.Data
         [Header("기본 정보")]
         public string perkId;              // 내부 ID (중복 금지, 코드용)
         public string displayName;         // UI 표시 이름
-        public string displayNameEvolution;
-
 
         [TextArea]
         public string description;         // UI 설명
-        [TextArea]
-        public string descriptionEvolution; // 진화버전 설명
 
         public Sprite icon;
+
+        [Header("진화 여부 / 정보")]
+        public bool canEvolve = false;
+        public string displayNameEvolution;
+        [TextArea]
+        public string descriptionEvolution; // 진화버전 설명
         public Sprite iconEvolution;
 
         [Header("분류")]

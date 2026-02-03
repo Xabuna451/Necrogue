@@ -25,5 +25,6 @@ public class Gold : MonoBehaviour
 
         // 획득 처리
         OwnerPool?.Return(this);
+        SaveManager.Instance.AddGold(amount);
     }
 }

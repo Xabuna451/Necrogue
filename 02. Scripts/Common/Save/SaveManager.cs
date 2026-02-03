@@ -1,163 +1,334 @@
 using UnityEngine;
+using System;
 using System.IO;
 using System.Collections.Generic;
-[System.Serializable]
+using System.Linq;
+
+/// <summary>Dictionary를 JSON으로 직렬화하기 위한 래퍼 클래스</summary>
+[Serializable]
+public class IntIntDictionaryEntry
+{
+    public int key;
+    public int value;
+
+    public IntIntDictionaryEntry() { }
+    public IntIntDictionaryEntry(int k, int v) { key = k; value = v; }
+}
+
+[Serializable]
 public class GameSaveData
 {
     public int deathCount = 0;
+    public int metaGold = 0;
+    public int perkBonus = 0;
+    
+    // JSON 직렬화용
+    public IntIntDictionaryEntry[] haveItemArray = new IntIntDictionaryEntry[0];
 
-    // 여기부터 추가!
-    public int persistentGold = 0;
-    public System.Collections.Generic.List<string> unlockedCharacters = new System.Collections.Generic.List<string>();
+    // 런타임용 (직렬화 안 됨)
+    [System.NonSerialized]
+    public Dictionary<int, int> haveItem = new();
 
-    // TODO: 나중에 스킨, 최고 점수 등 추가
+    /// <summary>JSON 저장 전에 Dictionary → Array로 변환</summary>
+    public void PrepareSerialization()
+    {
+        if (haveItem != null)
+            haveItemArray = haveItem.Select(kvp => new IntIntDictionaryEntry(kvp.Key, kvp.Value)).ToArray();
+    }
+
+    /// <summary>JSON 로드 후 Array → Dictionary로 변환</summary>
+    public void PostDeserialization()
+    {
+        haveItem = new Dictionary<int, int>();
+        if (haveItemArray != null)
+        {
+            foreach (var entry in haveItemArray)
+                haveItem[entry.key] = entry.value;
+        }
+    }
 }
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
+    /// <summary>런타임에서 사용하는 실제 데이터</summary>
     public GameSaveData Data { get; private set; }
 
-    [TextArea(1, 10)]
-    public string FileData = "C:\\Users\\M\\AppData\\LocalLow\\DefaultCompany\\OverTail"; // 디버그용 예시 경로
+    /// <summary>UI 갱신용</summary>
+    public event Action<GameSaveData> OnChanged;
 
+    // 파일 경로
     string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
+
+    // =========================
+    // Inspector Read-Only Preview
+    // =========================
+    [Header("Read Only (Preview)")]
+    [SerializeField] private GameSaveData preview;     // 인스펙터에서 보는 값(복사본)
+    [SerializeField] private bool saveFileExists;       // 파일 존재 여부
 
     void Awake()
     {
+        var root = transform.root.gameObject;
+
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(root);
             return;
         }
+
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(root);
 
         Load();
     }
 
+    // =========================
+    // Core Load/Save
+    // =========================
     public void Load()
     {
-        if (File.Exists(SavePath))
-        {
-            string json = File.ReadAllText(SavePath);
-            try
-            {
-                Data = JsonUtility.FromJson<GameSaveData>(json);
-                if (Data == null) Data = new GameSaveData();
-            }
-            catch
-            {
-                Debug.LogWarning("[SaveManager] 세이브 파일 파싱 실패. 새로 생성.");
-                Data = new GameSaveData();
-            }
-        }
-        else
-        {
-            Data = new GameSaveData();
-        }
-
-        // 기본 캐릭터 하나는 처음부터 해금되게 하고 싶으면 여기서 추가
-        if (Data.unlockedCharacters.Count == 0)
-        {
-            Data.unlockedCharacters.Add("DefaultSnake"); // 예시: 기본 뱀은 무조건 해금
-        }
-
-        Debug.Log($"[SaveManager] 로드 완료. deathCount = {Data.deathCount}, persistentGold = {Data.persistentGold}");
+        Data = ReadFromDiskOrNew();
+        SyncPreviewFrom(Data);
+        NotifyChanged();
     }
 
     public void Save()
     {
         if (Data == null) Data = new GameSaveData();
 
-        string json = JsonUtility.ToJson(Data, true);
-        File.WriteAllText(SavePath, json);
-        Debug.Log($"[SaveManager] 저장 완료. path = {SavePath}");
-    }
-
-    // ==== death 관련 편의 함수 ====
-    public void AddDeath()
-    {
-        if (Data == null) Data = new GameSaveData();
-
-        Data.deathCount++;
-        Debug.Log($"[SaveManager] Death +1 → {Data.deathCount}");
-        Save();
-    }
-
-    public int GetDeathCount()
-    {
-        return Data != null ? Data.deathCount : 0;
-    }
-
-    // ==== 영구 골드 관련 편의 함수 ====
-    public void AddPersistentGold(int amount)
-    {
-        if (Data == null) Data = new GameSaveData();
-
-        Data.persistentGold += amount;
-        Debug.Log($"[SaveManager] PersistentGold +{amount} → {Data.persistentGold}");
-        Save();
-    }
-
-    public bool SpendPersistentGold(int amount)
-    {
-        if (Data == null) Data = new GameSaveData();
-
-        if (Data.persistentGold >= amount)
+        try
         {
-            Data.persistentGold -= amount;
-            Debug.Log($"[SaveManager] PersistentGold -{amount} → {Data.persistentGold}");
-            Save();
-            return true;
+            // JSON 저장 전 Dictionary를 Array로 변환
+            Data.PrepareSerialization();
+
+            var dir = Path.GetDirectoryName(SavePath);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            string json = JsonUtility.ToJson(Data, true);
+            File.WriteAllText(SavePath, json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveManager] 저장 실패. path={SavePath}\n{e}");
         }
 
-        Debug.Log("[SaveManager] 골드 부족!");
-        return false;
+        // 저장 후에도 preview 갱신
+        SyncPreviewFrom(Data);
     }
 
-    public int GetPersistentGold()
+    void Commit()
     {
-        return Data != null ? Data.persistentGold : 0;
+        Save();
+        NotifyChanged();
     }
 
-    // ==== 캐릭터 해금 관련 편의 함수 ====
-    public bool UnlockCharacter(string characterId)
+    void NotifyChanged()
     {
-        if (Data == null) Data = new GameSaveData();
+        OnChanged?.Invoke(Data);
+    }
 
-        if (Data.unlockedCharacters.Contains(characterId))
+    GameSaveData ReadFromDiskOrNew()
+    {
+        saveFileExists = File.Exists(SavePath);
+
+        if (!saveFileExists)
+            return new GameSaveData();
+
+        try
         {
-            Debug.Log($"[SaveManager] 이미 해금된 캐릭터: {characterId}");
+            string json = File.ReadAllText(SavePath);
+            var data = JsonUtility.FromJson<GameSaveData>(json) ?? new GameSaveData();
+            
+            // JSON 로드 후 Array를 Dictionary로 변환
+            data.PostDeserialization();
+            
+            return data;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[SaveManager] 로드 실패 → 새 데이터 생성\n{e}");
+            return new GameSaveData();
+        }
+    }
+
+    void SyncPreviewFrom(GameSaveData src)
+    {
+        if (src == null)
+        {
+            preview = null;
+            return;
+        }
+
+        // “읽기 전용” 보장을 위해 복사본으로 유지
+        preview ??= new GameSaveData();
+        preview.deathCount = src.deathCount;
+        preview.metaGold = src.metaGold;
+        preview.perkBonus = src.perkBonus;
+        
+        // Array도 복사
+        preview.haveItemArray = src.haveItemArray != null 
+            ? (IntIntDictionaryEntry[])src.haveItemArray.Clone() 
+            : new IntIntDictionaryEntry[0];
+    }
+
+    // =========================
+    // Death
+    // =========================
+    public int DeathCount => Data?.deathCount ?? 0;
+
+    public void AddDeath(int amount = 1)
+    {
+        if (amount <= 0) return;
+        Data ??= new GameSaveData();
+
+        Data.deathCount = Mathf.Max(0, Data.deathCount + amount);
+        Commit();
+    }
+
+    public void SetDeathCount(int value)
+    {
+        Data ??= new GameSaveData();
+
+        Data.deathCount = Mathf.Max(0, value);
+        Commit();
+    }
+
+    public void ResetDeathCount() => SetDeathCount(0);
+
+    // =========================
+    // Gold
+    // =========================
+    public int MetaGold => Data?.metaGold ?? 0;
+
+    public bool CanSpendGold(int amount) => amount >= 0 && MetaGold >= amount;
+
+    public void AddGold(int amount)
+    {
+        if (amount <= 0) return;
+        Data ??= new GameSaveData();
+
+        Data.metaGold = Mathf.Max(0, Data.metaGold + amount);
+        Commit();
+    }
+
+    public bool SpendGold(int amount)
+    {
+        if (amount <= 0) return true;
+        Data ??= new GameSaveData();
+
+        if (!CanSpendGold(amount))
             return false;
-        }
 
-        Data.unlockedCharacters.Add(characterId);
-        Save();
-        Debug.Log($"[SaveManager] 캐릭터 해금 완료: {characterId}");
+        Data.metaGold = Mathf.Max(0, Data.metaGold - amount);
+        Commit();
         return true;
     }
 
-    public bool IsCharacterUnlocked(string characterId)
+    public void SetGold(int value)
     {
-        return Data != null && Data.unlockedCharacters.Contains(characterId);
+        Data ??= new GameSaveData();
+
+        Data.metaGold = Mathf.Max(0, value);
+        Commit();
     }
 
-    public List<string> GetAllUnlockedCharacters()
+    public void ResetGold() => SetGold(0);
+
+    // =========================
+    // Have Item
+    // =========================
+
+    public Dictionary<int, int> HaveItem => Data?.haveItem ?? new Dictionary<int, int>();
+
+    public void AddHaveItem(int itemId, int amount)
     {
-        return Data != null ? Data.unlockedCharacters : new List<string>();
+        if (amount <= 0) return;
+        Data ??= new GameSaveData();
+
+        if (Data.haveItem.ContainsKey(itemId))
+            Data.haveItem[itemId] += amount;
+        else
+            Data.haveItem[itemId] = amount;
+
+        Commit();
     }
 
-    // 디버그용: 에디터에서 테스트할 때 골드 초기화하고 싶으면 우클릭 → Reset All Data
-    [ContextMenu("Reset All Data")]
-    public void ResetAllData()
+    public int GetHaveItemCount(int itemId)
+    {
+        if (Data == null || Data.haveItem == null) return 0;
+
+        if (Data.haveItem.TryGetValue(itemId, out int count))
+            return count;
+        return 0;
+    }
+
+
+    // =========================
+    // Perk Bonus
+    // =========================
+    public int PerkBonus => Data?.perkBonus ?? 0;
+
+    public void AddPerkBonus(int amount)
+    {
+        if (amount == 0) return;
+        Data ??= new GameSaveData();
+
+        Data.perkBonus = Mathf.Max(0, Data.perkBonus + amount);
+        Commit();
+    }
+
+    public void SetPerkBonus(int value)
+    {
+        Data ??= new GameSaveData();
+
+        Data.perkBonus = Mathf.Max(0, value);
+        Commit();
+    }
+
+    public void ResetPerkBonus() => SetPerkBonus(0);
+
+    // =========================
+    // Debug
+    // =========================
+    [ContextMenu("Delete All SaveData")]
+    public void DeleteAllData()
     {
         if (File.Exists(SavePath))
-        {
             File.Delete(SavePath);
-            Debug.Log("[SaveManager] 모든 세이브 데이터 삭제 및 초기화");
-        }
-        Load(); // 새로 생성
+
+        Load();
     }
+
+    [ContextMenu("Force Save Now")]
+    public void ForceSaveNow()
+    {
+        Data ??= new GameSaveData();
+        Save();
+    }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 에디터에서도(플레이 전) 현재 save.json을 읽어서 preview 갱신
+    /// </summary>
+    void OnValidate()
+    {
+        // 플레이 중엔 런타임 흐름(Load/Commit)으로 갱신되므로 건드리지 않음
+        if (Application.isPlaying) return;
+
+        var temp = ReadFromDiskOrNew();
+        SyncPreviewFrom(temp);
+
+        // 인스펙터 즉시 반영
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    [ContextMenu("Open Save Folder")]
+    void OpenSaveFolder()
+    {
+        UnityEditor.EditorUtility.RevealInFinder(Application.persistentDataPath);
+    }
+#endif
 }

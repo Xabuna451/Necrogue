@@ -57,9 +57,8 @@ namespace Necrogue.Game.Systems
         [SerializeField] int rewardInitialEach = 50;
 
         public ObjectPool Pools => pools;
-
-        SceneManager sceneManager;
-        void Awake()
+        
+        private void Awake()
         {
             if (Instance && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
@@ -123,6 +122,8 @@ namespace Necrogue.Game.Systems
                 Debug.LogError($"[GameManager] Cannot set player - Registry: {registry != null}, Player: {player != null}");
             }
 
+            player.Perks.AddPickCountBonus(SaveManager.Instance.PerkBonus);
+            
             ApplyTimeScale();
         }
 

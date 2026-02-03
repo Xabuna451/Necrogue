@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2441a9ab1cd074da8adcdc789d5acd, type: 3}
+  m_Name: Perk_player_perk_bonus
+  m_EditorClassIdentifier: Assembly-CSharp::Necrogue.Perk.Data.PerkDef
+  perkId: player_perk_bonus
+  displayName: "\uB2E4\uB2E8\uACC4"
+  description: "\"\uC5EC\uBCF4\uC138\uC694~? \uC798 \uC9C0\uB0C8\uC5B4? \uC694\uC998
+    \uBB50\uD558\uACE0 \uC9C0\uB0B4? \n\uC544\uB2C8 \uB2E4\uB984\uC774 \uC544\uB2C8\uACE0
+    \uD639\uC2DC \uBB35\uB3C8 \uB9CC\uB4E4\uC5B4 \uBCFC \uC0DD\uAC01 \uC5C6\uC5B4?\""
+  icon: {fileID: -5723780740828389136, guid: bd9d968286550a84ba097a9c58a1c1b3, type: 3}
+  canEvolve: 0
+  displayNameEvolution: 
+  descriptionEvolution: 
+  iconEvolution: {fileID: 0}
+  category: 2
+  rarity: 4
+  weight: 1
+  maxStack: 1
+  effects:
+  - {fileID: 11400000, guid: 5aa5429ee17b32744ba600f330c9ffe1, type: 2}
