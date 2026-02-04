@@ -1,72 +1,71 @@
 using UnityEngine;
-
 using Necrogue.Player.Runtime;
-
 using Necrogue.Game.Systems;
-
 using Necrogue.Weapon.Runtime;
 
-public class PlayerWeapon : MonoBehaviour
+namespace Necrogue.Player.Runtime
 {
-    [SerializeField] private Player player;
-    [SerializeField] private Transform firePoint;
-
-    [Header("무기 데이터(SO)")]
-    [SerializeField] private WeaponProfile weapon;
-
-    float nextFireTime;
-
-    public void Init(Player player)
+    public class PlayerWeapon : MonoBehaviour
     {
-        this.player = player;
-    }
+        [SerializeField] private Player player;
+        [SerializeField] private Transform firePoint;
 
-    public void SetWeapon(WeaponProfile weapon)
-    {
-        if (!weapon) return;
-        this.weapon = weapon;
-        nextFireTime = 0f;
-    }
+        [Header("무기 데이터(SO)")]
+        [SerializeField] private WeaponProfile weapon;
 
-    void Update()
-    {
-        if (!player) return;
-        if (!firePoint) return;
-        if (!weapon) return;
+        private float nextFireTime;
 
-        var pools = GameManager.Instance ? GameManager.Instance.Pools : null;
-        var pool = pools ? pools.Bullets : null;
-        if (!pool) return;
+        public void Init(Player player)
+        {
+            this.player = player;
+        }
 
-        if (Time.time < nextFireTime) return;
+        public void SetWeapon(WeaponProfile weapon)
+        {
+            if (!weapon) return;
+            this.weapon = weapon;
+            nextFireTime = 0f;
+        }
 
-        FireMouseDirection(pool);
-        nextFireTime = Time.time + Mathf.Max(0.01f, weapon.fireInterval);
-    }
+        void Update()
+        {
+            if (!player || !firePoint || !weapon) return;
 
-    void FireMouseDirection(PlayerBulletPool pool)
-    {
-        var cam = Camera.main;
-        if (!cam) return;
+            var pools = GameManager.Instance?.Pools;
+            var pool = pools?.Bullets;
+            if (!pool) return;
 
-        Vector3 mp = Input.mousePosition;
-        mp.z = -cam.transform.position.z;
-        Vector3 mouseWorld = cam.ScreenToWorldPoint(mp);
-        mouseWorld.z = 0f;
+            if (Time.time < nextFireTime) return;
 
-        Vector2 dir = (Vector2)mouseWorld - (Vector2)firePoint.position;
-        if (dir.sqrMagnitude < 0.0001f) return;
-        dir.Normalize();
+            FireMouseDirection(pool);
+            nextFireTime = Time.time + Mathf.Max(0.01f, weapon.fireInterval);
+        }
 
-        var bullet = pool.GetBullet();
-        if (!bullet) return;
+        private void FireMouseDirection(PlayerBulletPool pool)
+        {
+            var cam = Camera.main;
+            if (!cam) return;
 
-        bullet.transform.position = firePoint.position;
-        bullet.transform.rotation = Quaternion.identity;
+            Vector3 mp = Input.mousePosition;
+            mp.z = -cam.transform.position.z;
+            Vector3 mouseWorld = cam.ScreenToWorldPoint(mp);
+            mouseWorld.z = 0f;
 
-        int dmg = player.Attack != null ? player.Attack.Attack : 1;
+            Vector2 dir = (Vector2)mouseWorld - (Vector2)firePoint.position;
+            if (dir.sqrMagnitude < 0.0001f) return;
+            dir.Normalize();
 
-        // “무기값을 주입”하는 방식으로 다양화
-        bullet.Fire(dir, weapon.bulletSpeed, dmg, weapon.bulletLifeTime);
+            var bullet = pool.GetBullet();
+            if (!bullet) return;
+
+            bullet.transform.position = firePoint.position;
+            bullet.transform.rotation = Quaternion.identity;
+
+            // 주의: player.Attack이 null일 경우 기본값 1 사용
+            // 나중에 PlayerAttack 컴포넌트가 제거/변경될 가능성 대비
+            int dmg = player?.Attack?.Attack ?? 1;
+
+            bullet.Fire(dir, weapon.bulletSpeed, dmg, weapon.bulletLifeTime);
+        }
     }
 }

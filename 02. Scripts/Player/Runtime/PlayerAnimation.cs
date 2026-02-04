@@ -1,33 +1,37 @@
 using UnityEngine;
-
 using Necrogue.Player.Runtime;
 
-public class PlayerAnimation : MonoBehaviour
+namespace Necrogue.Player.Runtime
 {
-    private Player player;
-    private Animator anim;
-
-    public void Init(Player player)
+    public class PlayerAnimation : MonoBehaviour
     {
-        this.player = player;
-    }
+        private Player player;
+        private Animator anim;
 
-    void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+        public void Init(Player player)
+        {
+            this.player = player;
+        }
 
-    void Update()
-    {
-        PlayerMoveAnimation(player.InputManager.AnyKey, player.InputManager.H, player.InputManager.V);
-    }
+        void Awake()
+        {
+            anim = GetComponent<Animator>();
 
-    void PlayerMoveAnimation(bool AnyKey, float LR, float UD)
-    {
-        if (!anim) return;
-        anim.SetBool("AnyKey", AnyKey);
-        anim.SetFloat("LR", LR, 0.1f, Time.deltaTime);
-        anim.SetFloat("UD", UD, 0.1f, Time.deltaTime);
-    }
+            // Animator가 없으면 경고 (애니메이션 동작 안 함)
+            if (!anim)
+            {
+                Debug.LogWarning("[PlayerAnimation] Animator 컴포넌트가 없습니다.");
+            }
+        }
 
+        void Update()
+        {
+            if (!player || !player.InputManager || !anim) return;
+
+            var input = player.InputManager;
+            anim.SetBool("AnyKey", input.AnyKey);
+            anim.SetFloat("LR", input.H, 0.1f, Time.deltaTime);
+            anim.SetFloat("UD", input.V, 0.1f, Time.deltaTime);
+        }
+    }
 }

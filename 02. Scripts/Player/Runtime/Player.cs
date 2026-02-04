@@ -1,10 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 using Necrogue.Core.Domain.Stats;
-using Necrogue.Core.Domain.Necro;      // NecroRuntimeParams 쓴다면 필요
+using Necrogue.Core.Domain.Necro;
 using Necrogue.Perk.Runtime;
 using Necrogue.Weapon.Runtime;
-
 
 namespace Necrogue.Player.Runtime
 {
@@ -24,51 +24,35 @@ namespace Necrogue.Player.Runtime
         [Header("베이스 스탯(SO)")]
         [SerializeField] public PlayerStatAsset Stats;
 
-        // ==================================================
-        // [2] Components (Runtime)
-        // ==================================================
-        [Header("플레이어 컴포넌트")]
-        [SerializeField] private PlayerMovement playerMovement;
-        [SerializeField] private PlayerHp playerHp;
-        [SerializeField] private PlayerExp playerExp;
-        [SerializeField] private PlayerAttack playerAttack;
-        [SerializeField] private PlayerHit playerHit;
-        [SerializeField] private PlayerAnimation playerAnimation;
-        [SerializeField] private PlayerWeapon playerWeapon;
-        [SerializeField] private PlayerUI ui;
-
-        [Header("네크로맨서")]
-        [SerializeField] private PlayerNecroController necroController;
-
         [Header("기본 무기")]
         [SerializeField] private WeaponProfile defaultWeapon;
 
-        [Header("특전")]
-        [SerializeField] private PerkSystem perkSystem;
-
         // ==================================================
-        // [3] Public Accessors
-        // ==================================================
-        public PlayerMovement Move => playerMovement;
-        public PlayerHp Hp => playerHp;
-        public PlayerExp Exp => playerExp;
-        public PlayerAttack Attack => playerAttack;
-        public PlayerHit Hit => playerHit;
-        public PlayerWeapon Weapon => playerWeapon;
-        public PlayerAnimation Animation => playerAnimation;
-        public PlayerNecroController Necro => necroController;
-        public PerkSystem Perks => perkSystem;
-        public PlayerUI UI => ui;
-
-        public InputManager InputManager => inputManager;
-
-        // ==================================================
-        // [4] Runtime Results (합성 결과)
+        // [2] Runtime Results (합성 결과)
         // ==================================================
         public PlayerRuntimeStats RuntimeStats { get; private set; } = new PlayerRuntimeStats();
-
-        // PerkSystem이 Necro까지 재연산하는 구조라면 Player도 들고 있어야 함
         public NecroRuntimeParams NecroRuntime { get; private set; } = new NecroRuntimeParams();
+
+        // ==================================================
+        // [3] Stat 적용 대상 컴포넌트 (IStatAppliable)
+        // ==================================================
+        private readonly List<IStatAppliable> statAppliables = new();
+
+        // ==================================================
+        // [4] Public Accessors (기존 코드 호환용)
+        // ==================================================
+        public PlayerMovement Move => GetComponentInChildren<PlayerMovement>(true);
+        public PlayerHp Hp => GetComponentInChildren<PlayerHp>(true);
+        public PlayerExp Exp => GetComponentInChildren<PlayerExp>(true);
+        public PlayerAttack Attack => GetComponentInChildren<PlayerAttack>(true);
+        public PlayerHit Hit => GetComponentInChildren<PlayerHit>(true);
+        public PlayerAnimation Animation => GetComponentInChildren<PlayerAnimation>(true);
+        public PlayerWeapon Weapon => GetComponentInChildren<PlayerWeapon>(true);
+        public PlayerNecroController Necro => GetComponentInChildren<PlayerNecroController>(true);
+        public PerkSystem Perks => GetComponentInChildren<PerkSystem>(true);
+        public PlayerUI UI => FindFirstObjectByType<PlayerUI>();
+
+        public InputManager InputManager => inputManager;
 
         // ==================================================
         // [5] Unity Lifecycle
@@ -83,59 +67,87 @@ namespace Necrogue.Player.Runtime
                 return;
             }
 
+            // IStatAppliable 자동 수집 (자식 포함)
+            statAppliables.AddRange(GetComponentsInChildren<IStatAppliable>(true));
+
             InitComponents();
         }
 
         private void OnEnable()
         {
-            if (playerExp != null)
-                playerExp.OnLeveledUp += HandleLeveledUp;
+            var exp = Exp;
+            if (exp != null)
+                exp.OnLeveledUp += HandleLeveledUp;
         }
 
         private void OnDisable()
         {
-            if (playerExp != null)
-                playerExp.OnLeveledUp -= HandleLeveledUp;
+            var exp = Exp;
+            if (exp != null)
+                exp.OnLeveledUp -= HandleLeveledUp;
         }
 
         void Start()
         {
             // 최초 1회 빌드
             RebuildStats();
-            Hp.ResetFull();
+            Hp?.ResetFull();
         }
 
         [System.Obsolete]
-        private void FixedUpdate()
+        // FixedUpdate는 이제 사용하지 않을 것 (각 컴포넌트가 스스로 관리하거나 GameManager에서 호출)
+        void FixedUpdate()
         {
-            playerMovement?.PhysicsMove();
-            playerHit?.CheckHit();
+            // 이동 처리
+            Move?.PhysicsMove();
+            Hit.CheckHit();
         }
+
 
         // ==================================================
         // [6] Initialization
         // ==================================================
         private void InitComponents()
         {
-            // 전부 Init(this)로 통일 (Movement만 Init()였던 부분 수정)
-            if (playerMovement) playerMovement.Init(this);
-            if (playerHp) playerHp.Init(this);
-            if (playerAttack) playerAttack.Init(this);
-            if (playerHit) playerHit.Init(this);
-            if (playerExp) playerExp.Init(this);
-            if (playerAnimation) playerAnimation.Init(this);
+            // Movement
+            var movement = Move;
+            if (movement) movement.Init(this);
 
-            if (playerWeapon)
+            // Hp
+            var hp = Hp;
+            if (hp) hp.Init(this);
+
+            // Attack
+            var attack = Attack;
+            if (attack) attack.Init(this);
+
+            // Hit
+            var hit = Hit;
+            if (hit) hit.Init(this);
+
+            // Exp
+            var exp = Exp;
+            if (exp) exp.Init(this);
+
+            // Animation
+            var anim = Animation;
+            if (anim) anim.Init(this);
+
+            // Weapon
+            var weapon = Weapon;
+            if (weapon)
             {
-                playerWeapon.Init(this);
-                if (defaultWeapon) playerWeapon.SetWeapon(defaultWeapon);
+                weapon.Init(this);
+                if (defaultWeapon) weapon.SetWeapon(defaultWeapon);
             }
 
-            if (necroController)
-                necroController.Init(this, inputManager);
+            // Necro
+            var necro = Necro;
+            if (necro) necro.Init(this, inputManager);
 
-            if (perkSystem)
-                perkSystem.Init(this);
+            // PerkSystem
+            var perks = Perks;
+            if (perks) perks.Init(this);
         }
 
         // ==================================================
@@ -143,7 +155,8 @@ namespace Necrogue.Player.Runtime
         // ==================================================
         private void HandleLeveledUp(int newLevel)
         {
-            if (perkSystem) perkSystem.OnLevelUp();
+            var perks = Perks;
+            if (perks) perks.OnLevelUp();
         }
 
         // ==================================================
@@ -153,37 +166,35 @@ namespace Necrogue.Player.Runtime
         {
             if (!Stats) return;
 
-            // PerkSystem이 “전체 재연산 + ApplyRuntimeStats()까지” 담당하는 구조면
-            // Player는 그냥 트리거만 한다.
-            if (perkSystem != null)
+            // PerkSystem이 전체 재연산을 담당하는 구조라면 트리거만
+            var perks = Perks;
+            if (perks != null)
             {
-                perkSystem.RecalculateAll();
+                perks.RecalculateAll();
                 return;
             }
 
-            // (PerkSystem이 없다면) Base -> Runtime 복사 후 적용만
+            // PerkSystem이 없을 때만 직접 적용
             RuntimeStats.SetFromBase(Stats);
             ApplyRuntimeStats();
         }
 
         public void ApplyRuntimeStats()
         {
-            if (playerMovement) playerMovement.ApplyStats(RuntimeStats);
-            if (playerAttack) playerAttack.ApplyStats(RuntimeStats);
-            if (playerHp) playerHp.ApplyStats(RuntimeStats);
-
-            // NecroRuntime을 실제 네크로 시스템에 반영하는 함수는
-            // PlayerNecroController에 ApplyRuntime(NecroRuntimeParams)로 붙일 예정
-            if (necroController) necroController.ApplyRuntime(NecroRuntime);
+            // 이제 리스트 순회로 한 번에 적용
+            foreach (var appliable in statAppliables)
+            {
+                appliable.ApplyStats(RuntimeStats, NecroRuntime);
+            }
         }
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                Necro.NecromancerLevelUp();
+                var necro = Necro;
+                necro?.NecromancerLevelUp();
             }
         }
     }
-
-
 }

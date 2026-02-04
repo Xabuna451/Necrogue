@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; // Concat, Select 등 LINQ 사용
 
 using Necrogue.Enemy.Runtime;
 using Necrogue.Enemy.Data.States;
@@ -9,136 +10,149 @@ namespace Necrogue.Player.Runtime
 {
     public partial class NecromancerController : MonoBehaviour
     {
-        [SerializeField] PlayerStatAsset stat;
+        [SerializeField] private PlayerStatAsset stat;
 
-        // Perk 상태(이벤트)
-        [SerializeField] NecroPerkState perk;
+        [SerializeField] private NecroPerkState perk;
 
-        [Header("Elite Undead?")]
+        [Header("Elite / Boss Undead 허용 여부")]
         [SerializeField] private bool isEliteUndead = false;
         [SerializeField] private bool isBossUndead = false;
 
-        readonly List<EnemyContext> undead = new();
-        readonly HashSet<EnemyHp> reserved = new();
-        readonly HashSet<EnemyHp> reanim = new();
+        private readonly List<EnemyContext> undead = new();
+        private readonly HashSet<EnemyHp> reserved = new();
+        private readonly HashSet<EnemyHp> reanim = new();
 
-        int BaseMax => stat && stat.necromaner != null ? stat.necromaner.maxCount : 0;
-        int Slots => undead.Count + reserved.Count + reanim.Count;
-
-        int Max => BaseMax + (perk ? perk.AllyCapBonus : 0);
+        private int BaseMax => stat?.necromaner?.maxCount ?? 0;
+        private int Slots => undead.Count + reserved.Count + reanim.Count;
+        private int Max => BaseMax + (perk?.AllyCapBonus ?? 0);
         public bool HasSlot => Slots < Max;
 
-        void Awake()
+        private void Awake()
         {
             if (!perk) perk = GetComponent<NecroPerkState>();
             if (perk) perk.OnChanged += RefreshUndeadStats;
-
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (perk) perk.OnChanged -= RefreshUndeadStats;
+
+            // 모든 추적 중인 HP의 OnDied 이벤트 정리 (메모리 누수 방지)
+            var allTrackedHp = reserved.Concat(reanim)
+                                        .Concat(undead.Select(c => c?.Hp))
+                                        .Where(hp => hp != null);
+
+            foreach (var hp in allTrackedHp)
+            {
+                hp.OnDied -= OnDied;
+            }
         }
 
-        // ============================ Perk 적용(갱신) ============================
-        void RefreshUndeadStats()
+        // =============================================================
+        // Perk 변경 시 모든 언데드 스탯 갱신
+        // =============================================================
+        private void RefreshUndeadStats()
         {
             for (int i = undead.Count - 1; i >= 0; i--)
             {
                 var ctrl = undead[i];
-                if (!ctrl) { undead.RemoveAt(i); continue; }
+                if (!ctrl)
+                {
+                    undead.RemoveAt(i);
+                    continue;
+                }
+
                 if (ctrl.Faction != Faction.Ally) continue;
 
-                var ehp = ctrl.Hp;
-                if (ehp == null || ehp.Dead) continue; // 갱신 중 Revive로 dead=false 되는 사고 방지
+                var hp = ctrl.Hp;
+                if (hp == null || hp.Dead) continue;
 
-                ApplyUndeadAttack(ctrl);
+                ApplyUndeadStats(ctrl);
             }
 
             NotifyUndeadChanged();
         }
 
-        void ApplyUndeadHp(EnemyContext ctrl, bool fullHeal)
+        // HP + Attack 한 번에 적용하는 통합 헬퍼
+        private void ApplyUndeadStats(EnemyContext ctrl)
         {
-            var prof = stat ? stat.necromaner : null;
-            if (!ctrl || !ctrl.def || prof == null) return;
-            if (!perk) return;
+            if (!ctrl || !ctrl.Hp || !ctrl.def) return;
 
-            var hp = ctrl.Hp;
-            if (hp == null || ctrl.def.stats == null) return;
+            var prof = stat?.necromaner;
+            if (prof == null || perk == null) return;
 
-            int baseMaxHp = Mathf.Max(1, ctrl.def.stats.maxHp);
-
-            int newMaxHp = NecroUndeadStatFormula.ComputeMaxHp(
-                baseMaxHp,
+            // HP 적용
+            int baseMax = Mathf.Max(1, ctrl.def.stats?.maxHp ?? 1);
+            int newMax = NecroUndeadStatFormula.ComputeMaxHp(
+                baseMax,
                 prof.hpMul,
                 perk.AllyHpAdd,
                 perk.AllyHpMul
             );
+            ctrl.Hp.SetMaxHp(newMax);
 
-            hp.Revive(newMaxHp, fullHeal);
-        }
-
-        void ApplyUndeadAttack(EnemyContext ctrl)
-        {
-            var prof = stat ? stat.necromaner : null;
-            if (!ctrl || !ctrl.def || prof == null) return;
-            if (!perk) return;
-            if (ctrl.def.attack == null) return;
-
-            float baseAtk = ctrl.def.attack.attackDamage;
-
-            float finalMul = NecroUndeadStatFormula.ComputeAttackMul(
+            // Attack 적용
+            float baseAtk = ctrl.def.attack?.attackDamage ?? 1f;
+            float mul = NecroUndeadStatFormula.ComputeAttackMul(
                 baseAtk,
                 prof.attackMul,
                 perk.AllyDamageAdd,
                 perk.AllyDamageMul
             );
-
-            ctrl.SetAttackMul(finalMul);
+            ctrl.SetAttackMul(mul);
         }
 
-        // ============================ 부활 흐름 ============================
+        // =============================================================
+        // 부활 예약 시도
+        // =============================================================
         public bool TryReserve(EnemyHp hp)
         {
-            if (!hp) return false;
-
-            var prof = stat ? stat.necromaner : null;
-            if (prof == null) return false;
-
-            var enemy = hp.GetComponent<EnemyContext>();
-            if (!enemy || !enemy.def) return false;
-
-            if (enemy.Faction != Faction.Corpse) return false;
-            if (reserved.Contains(hp) || reanim.Contains(hp)) return false;
-
-            // 보스임?
-            bool boss = enemy.def.boss != null;
-            // 보스 언데드 가능함?
-            if (boss && !prof.bossOK && !isBossUndead) return false;
-
-            // 엘리트임?
-            bool elite = enemy.IsElite == true;
-            // 엘리트 언데드 가능함?
-            if (elite == true && !isEliteUndead) return false;
-
-            // 언데드 레벨 낮으면 리턴
-            var player = gameObject.GetComponentInParent<Player>();
-            if (player.Necro.Level < enemy.def.stats.underLevel) return false;
-
-            if (Random.value >= prof.reviveTime) return false;
-            Debug.Log($"[Necro] Slots={Slots}, Max={Max} (BaseMax={BaseMax}, CapBonus={(perk ? perk.AllyCapBonus : 0)})");
-            if (!HasSlot) return false;
+            if (!IsValidForReserve(hp)) return false;
 
             reserved.Add(hp);
             NotifyUndeadChanged();
             return true;
         }
 
+        private bool IsValidForReserve(EnemyHp hp)
+        {
+            if (!hp) return false;
+
+            var prof = stat?.necromaner;
+            if (prof == null) return false;
+
+            var ctrl = hp.GetComponent<EnemyContext>();
+            if (!ctrl || ctrl.Faction != Faction.Corpse) return false;
+
+            if (reserved.Contains(hp) || reanim.Contains(hp)) return false;
+
+            // 보스/엘리트 조건
+            if (ctrl.def?.boss != null && !prof.bossOK && !isBossUndead) return false;
+            if (ctrl.IsElite && !isEliteUndead) return false;
+
+            // 레벨 조건
+            var player = GetComponentInParent<Player>();
+            if (player?.Necro?.Level < ctrl.def?.stats?.underLevel) return false;
+
+            // 확률
+            if (Random.value >= prof.reviveTime) return false;
+
+            // 슬롯 여유
+            if (!HasSlot)
+            {
+                Debug.Log($"[Necro] Slot full → {Slots}/{Max}");
+                return false;
+            }
+
+            return true;
+        }
+
+        // =============================================================
+        // 부활 준비 완료 (예약 -> 부활 대기열 이동)
+        // =============================================================
         public void OnCorpseReady(EnemyHp hp)
         {
-            if (!hp) return;
-            if (!reserved.Contains(hp)) return;
+            if (!hp || !reserved.Contains(hp)) return;
             if (reanim.Contains(hp)) return;
 
             reserved.Remove(hp);
@@ -151,12 +165,15 @@ namespace Necrogue.Player.Runtime
             StartCoroutine(Reanimate(hp));
         }
 
-        IEnumerator Reanimate(EnemyHp hp)
+        // =============================================================
+        // 실제 부활 코루틴
+        // =============================================================
+        private IEnumerator Reanimate(EnemyHp hp)
         {
-            var ctrl = hp.GetComponent<EnemyContext>();
+            var ctrl = hp?.GetComponent<EnemyContext>();
             if (!ctrl) { reanim.Remove(hp); yield break; }
 
-            var prof = stat ? stat.necromaner : null;
+            var prof = stat?.necromaner;
             if (prof == null) { reanim.Remove(hp); yield break; }
 
             yield return new WaitForSeconds(prof.reviveDelay);
@@ -165,9 +182,9 @@ namespace Necrogue.Player.Runtime
 
             ctrl.StateMachine.SwitchState(EnemyStateType.Revive);
 
-            // 부활은 풀힐 + 공격 적용
-            ApplyUndeadHp(ctrl, fullHeal: true);
-            ApplyUndeadAttack(ctrl);
+            // 부활 시 풀 힐 + 스탯 적용
+            ApplyUndeadStats(ctrl);
+            ctrl.Hp?.Revive(ctrl.Hp.MaxHp, fullHeal: true);  // EnemyHp의 Revive 호출 (fullHeal)
 
             if (!undead.Contains(ctrl))
             {
@@ -178,29 +195,23 @@ namespace Necrogue.Player.Runtime
 
             reanim.Remove(hp);
             NotifyUndeadChanged();
-
         }
 
-        void OnDied(EnemyHp hp, Faction diedAs)
+        private void OnDied(EnemyHp hp, Faction diedAs)
         {
             if (diedAs != Faction.Ally) return;
 
-            var ctrl = hp.GetComponent<EnemyContext>();
+            var ctrl = hp?.GetComponent<EnemyContext>();
             if (ctrl) undead.Remove(ctrl);
 
             hp.OnDied -= OnDied;
             NotifyUndeadChanged();
         }
 
-        // API
-        public void EliteUndead(bool on)
-        {
-            isEliteUndead = on;
-        }
-
-        public void BossUndead(bool on)
-        {
-            isBossUndead = on;
-        }
+        // =============================================================
+        // 외부 API
+        // =============================================================
+        public void EliteUndead(bool on) => isEliteUndead = on;
+        public void BossUndead(bool on) => isBossUndead = on;
     }
 }

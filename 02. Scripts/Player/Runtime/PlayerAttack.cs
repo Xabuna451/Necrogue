@@ -1,46 +1,46 @@
 using UnityEngine;
-
-using Necrogue.Player.Runtime;
 using Necrogue.Core.Domain.Stats;
-using System;
-public class PlayerAttack : MonoBehaviour
+using Necrogue.Player.Runtime;
+
+using Necrogue.Core.Domain.Necro;
+
+namespace Necrogue.Player.Runtime
 {
-    [Header("공격 스탯")]
-    [SerializeField] private int attack = 10;
-
-    private Player player;
-
-    public int Attack => attack;
-
-    public void Init(Player player)
+    public class PlayerAttack : MonoBehaviour, IStatAppliable
     {
-        this.player = player;
-    }
+        [Header("공격 스탯")]
+        [SerializeField] private int baseAttack = 10;           // 에디터 기본값 (스탯 미적용 시)
 
-    public void InitFromBase(PlayerStatAsset stats)
-    {
-        if (stats)
+        private int currentAttack;                              // 런타임 실제 공격력
+
+        private Player player;
+
+        public int Attack => currentAttack;
+
+        public void Init(Player player)
         {
-            attack = stats.baseAttack;
+            this.player = player;
+        }
+
+        public void ApplyStats(PlayerRuntimeStats playerStats, NecroRuntimeParams necroParams = null)
+        {
+            currentAttack = playerStats.attack;
+
+            // attack이 0 이하로 내려가지 않도록 최소값 보장
+            if (currentAttack < 1) currentAttack = 1;
+        }
+
+        // ==============================================
+        // 디버그 / 치트용 API
+        // ==============================================
+        /// <summary>
+        /// 강제 공격력 설정 (디버그/치트용)
+        /// 주의: 게임 로직에서 직접 호출하지 말고 DebugManager 등에서만 사용
+        /// </summary>
+        public void SetAttackDirect(int value)
+        {
+            currentAttack = Mathf.Max(1, value);
+            Debug.Log($"[DEBUG] Player Attack set to {currentAttack}");
         }
     }
-
-    // ================== 공격 실행 ==================
-    // 지금은 "공격력만 가진다"
-    // 실제 공격은 Bullet / Hitbox / Skill에서 사용
-    // ==============================================
-
-
-    // ============== 외부 API (디버그/치트) ==============
-    public void SetAttackDirect(int value)
-    {
-        attack = Mathf.Max(0, value);
-        Debug.Log($"[DEBUG] Player Attack set to {attack}");
-    }
-
-    public void ApplyStats(PlayerRuntimeStats runtimeStats)
-    {
-        attack = runtimeStats.attack;
-    }
-    // ====================================================
 }

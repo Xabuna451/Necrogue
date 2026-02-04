@@ -1,58 +1,66 @@
 using UnityEngine;
 using Necrogue.Core.Domain.Necro;
 using Necrogue.Player.Runtime;
-
 using Necrogue.Enemy.Runtime;
+using Necrogue.Game.Systems;
 
 namespace Necrogue.Player.Runtime
 {
     public class PlayerNecroController : MonoBehaviour
     {
-        [SerializeField] int necromancerLevel;
+        [SerializeField] private int necromancerLevel;
         public int Level => necromancerLevel;
 
-        [SerializeField] NecroPerkState perkState;
-        [SerializeField] InputManager input;
-        [SerializeField] float findRange = 5f;
+        [SerializeField] private NecroPerkState perkState;
+        [SerializeField] private InputManager input;
+        [SerializeField] private float findRange = 5f;
 
         [Header("Layer")]
-        [SerializeField] LayerMask corpseLayer;   // 시체
-        [SerializeField] LayerMask undeadLayer;   // 언데드(Ally)
+        [SerializeField] private LayerMask corpseLayer;   // 시체 (Corpse Faction)
+        [SerializeField] private LayerMask undeadLayer;   // 언데드 (Ally Faction)
 
-        Player player;
-        [SerializeField] EnemyHp hoverCorpse;   // 가장 가까운 시체
+        private Player player;
+        [SerializeField] private EnemyHp hoverCorpse;     // 현재 하이라이트 중인 가장 가까운 시체
 
         public void Init(Player p, InputManager im)
         {
             player = p;
             input = im;
-            necromancerLevel = player.Stats.necromaner.level;
+
+            // 주의: Stats.necromaner가 null일 경우 기본값 1로 안전 처리
+            necromancerLevel = player?.Stats?.necromaner?.level ?? 1;
         }
+
         void Update()
         {
             FindNearestCorpse();
 
-            if (input.RightClick)
+            if (input?.RightClick == true)
                 KillUndeadUnderMouse();
         }
 
+        /// <summary>
+        /// 퍼크/스탯 변경 시 NecroPerkState에 값 전달 후 모든 언데드 재계산
+        /// </summary>
         public void ApplyRuntime(NecroRuntimeParams p)
         {
             if (!perkState || p == null) return;
 
-            // 1) NecroPerkState에 값 밀어넣기
+            // NecroPerkState에 직접 값 밀어넣기
             perkState.SetAllyDamage(p.allyDamageMul, p.allyDamageAdd);
             perkState.SetAllyHp(p.allyHpMul, p.allyHpAdd);
             perkState.SetAllyCapBonus(p.allyCapAdd);
 
-            // 2) 즉시 반영: 현재 언데드 전부 재계산
+            // 즉시 반영: 현재 존재하는 모든 언데드 스탯 재계산
             RebuildAllUndeadStats();
         }
-        void RebuildAllUndeadStats()
+
+        private void RebuildAllUndeadStats()
         {
+            // 100f는 임시로 충분히 큰 범위 -> 나중에 실제 맵 크기나 QuadTree 등으로 최적화 고려
             var hits = Physics2D.OverlapCircleAll(
                 player.transform.position,
-                100f,              // 전체 범위(충분히 크게)
+                100f,
                 undeadLayer
             );
 
@@ -67,33 +75,34 @@ namespace Necrogue.Player.Runtime
                 ApplyUndeadStat(ctrl, hp);
             }
         }
-        void ApplyUndeadStat(EnemyContext ctrl, EnemyHp hp)
+
+        private void ApplyUndeadStat(EnemyContext ctrl, EnemyHp hp)
         {
-            var necroProfile = player.Stats.necromaner;
+            var necroProfile = player?.Stats?.necromaner;
             if (!necroProfile) return;
 
-            // === HP ===
+            // HP 계산 및 적용
             int maxHp = NecroUndeadStatFormula.ComputeMaxHp(
-                hp.Hp,                 // EnemyStatAsset 기준값
+                hp.Hp,                      // EnemyStatAsset 기준 base HP
                 necroProfile.hpMul,
                 perkState.AllyHpAdd,
-                perkState.AllyHpMul
+                perkState.AllyHpMul - 1f    // Mul은 1-based (1.2 = +20%)
             );
 
             hp.SetMaxHp(maxHp);
 
-            // === Attack ===
+            // Attack 배율 계산 및 적용
             float atkMul = NecroUndeadStatFormula.ComputeAttackMul(
-                ctrl.def.attack.attackDamage,              // EnemyStatAsset 기준값
+                ctrl.def.attack.attackDamage,   // base attack
                 necroProfile.attackMul,
                 perkState.AllyDamageAdd,
-                perkState.AllyDamageMul
+                perkState.AllyDamageMul - 1f    // Mul은 1-based
             );
 
             ctrl.SetAttackMul(atkMul);
         }
 
-        void FindNearestCorpse()
+        private void FindNearestCorpse()
         {
             if (!player) return;
 
@@ -101,39 +110,32 @@ namespace Necrogue.Player.Runtime
             var hits = Physics2D.OverlapCircleAll(pos, findRange, corpseLayer);
 
             EnemyHp best = null;
-            float bestDist = float.MaxValue;
+            float bestDistSqr = float.MaxValue;
 
             foreach (var h in hits)
             {
                 var hp = h.GetComponentInParent<EnemyHp>();
                 if (!hp) continue;
 
-                var ctrl = hp.GetComponent<EnemyContext>();
+                var ctrl = hp.GetComponentInParent<EnemyContext>();
                 if (!ctrl || ctrl.Faction != Faction.Corpse) continue;
 
-                float d = (hp.transform.position - player.transform.position).sqrMagnitude;
-                if (d < bestDist)
+                float distSqr = (hp.transform.position - player.transform.position).sqrMagnitude;
+                if (distSqr < bestDistSqr)
                 {
-                    bestDist = d;
+                    bestDistSqr = distSqr;
                     best = hp;
                 }
             }
-
-            SetHighlight(hoverCorpse, false);
+            
             hoverCorpse = best;
-            SetHighlight(hoverCorpse, true);
         }
 
-        void SetHighlight(EnemyHp hp, bool on)
-        {
-            if (!hp) return;
-
-            var anim = hp.GetComponent<Animator>();
-            if (!anim) return;
-        }
-
-        // 2. 마우스 아래 언데드 시체폭발
-        void KillUndeadUnderMouse()
+        /// <summary>
+        /// 마우스 위치의 언데드 폭파 (현재 하드코딩된 값 사용)
+        /// 나중에는 퍼크/스탯에서 radius, damage 가져오도록 변경 예정
+        /// </summary>
+        private void KillUndeadUnderMouse()
         {
             Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -148,27 +150,30 @@ namespace Necrogue.Player.Runtime
 
             Vector3 pos = hp.transform.position;
 
-            // 폭발 파라미터(일단 하드코딩, 나중에 퍼크 런타임 값으로 교체)
+            // 임시 하드코딩 값 → 나중에 NecroRuntimeParams나 Perk에서 동적 가져오기
             float radius = 2.5f;
             int damage = 1557;
 
-            var gm = Necrogue.Game.Systems.GameManager.Instance;
-            if (gm != null && gm.Pools != null)
+            var gm = GameManager.Instance;
+            if (gm?.Pools != null)
+            {
                 gm.Pools.UndeadExplosions?.Get(pos, radius, damage);
+            }
 
             hp.Damaged(999999);
         }
 
-
-        // API
-
+        // ==============================
+        // 외부 API (레벨 조작)
+        // ==============================
         public void NecromancerLevelUp()
         {
             necromancerLevel++;
         }
+
         public void NecromancerLevelDown()
         {
-            necromancerLevel--;
+            necromancerLevel = Mathf.Max(1, necromancerLevel - 1);
         }
     }
 }
