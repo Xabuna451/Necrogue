@@ -162,6 +162,10 @@ namespace Necrogue.Perk.Runtime
             NecroComposer.Apply(player.NecroRuntime, necroMods);
 
             player.ApplyRuntimeStats();
+            
+            // NecroRuntime 값들을 PlayerNecroController에 적용
+            if (player.Necro != null)
+                player.Necro.ApplyRuntime(player.NecroRuntime);
         }
 
         // ==================================================
