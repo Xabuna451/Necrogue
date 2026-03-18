@@ -4,14 +4,6 @@
 
 > 플레이어가 적을 처치하고 언데드로 부활시킨 후, 시너지 있는 퍼크를 조합하여 강력한 군대를 빌드하는 싱글플레이 로그라이크 액션 게임입니다.
 
-<div align="center">
-
-![Unity](https://img.shields.io/badge/Unity-6000.2.13f1-black?logo=unity)
-![C#](https://img.shields.io/badge/Language-C%23-239120?logo=csharp)
-![Status](https://img.shields.io/badge/Status-Active%20Development-green)
-
-</div>
-
 ---
 
 ## 📑 목차
@@ -22,7 +14,6 @@
 - [주요 시스템](#주요-시스템)
 - [프로젝트 구조](#프로젝트-구조)
 - [기술 스택](#기술-스택)
-- [설치 및 실행](#설치-및-실행)
 - [포트폴리오 포인트](#포트폴리오-포인트)
 
 ---
@@ -351,13 +342,11 @@ Assets/
 ## 설치 및 실행
 
 ### 필수 사항
-- **Unity**: 6000.2.13f1 (정확한 버전)
-- **OS**: Windows 10 이상 (또는 macOS / Linux)
-- **메모리**: 4GB 이상
+- **Unity**: 6000.2.13f1
 
 ### 1단계: 저장소 클론
 ```bash
-git clone https://github.com/your-username/Necrogue.git
+git clone https://github.com/Xabuna451/Necrogue.git
 cd Necrogue
 ```
 
@@ -435,9 +424,9 @@ Unity Editor에서 ▶ (Play) 버튼 클릭
 - [x] UI 및 퍼크 선택 화면
 - [x] 게임 상태 관리
 - [x] 효과음 및 기본 애니메이션
+- [x] 세이브/로드 시스템
 
 ### 🔄 진행 중
-- [ ] 세이브/로드 시스템
 - [ ] 고급 밸런싱 패스
 
 ### 📋 향후 계획
@@ -451,24 +440,6 @@ Unity Editor에서 ▶ (Play) 버튼 클릭
 
 ### 자세한 설계 문서
 - [퍼크 합성 규칙](Assets/necromancer_perk_composition_rules.md) - 퍼크 밸런스 철학
-
----
-
-## 라이선스 & 출처
-
-- **엔진**: Unity Technologies
-- **아트**: [출처 기재 예정]
-- **음향**: [출처 기재 예정]
-
----
-
-## 피드백 & 연락처
-
-```
-📧 이메일: your-email@example.com
-💼 포트폴리오: https://your-portfolio.com
-🔗 LinkedIn: https://linkedin.com/in/your-profile
-```
 
 ---
 

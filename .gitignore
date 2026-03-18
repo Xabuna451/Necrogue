@@ -1,0 +1,16 @@
+# Unity
+Library/
+Temp/
+Logs/
+obj/
+Build/
+Builds/
+UserSettings/
+
+# 백업
+_Recovery/
+
+# Visual Studio
+.vs/
+*.csproj
+*.sln
