@@ -52,8 +52,14 @@ namespace Necrogue.Game.Sounds
             // 믹서 연결 (있으면)
             if (mixer != null)
             {
-                bgmSource.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
-                sfxSource.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+                var bgmGroup = mixer.FindMatchingGroups("BGM");
+                var sfxGroup = mixer.FindMatchingGroups("SFX");
+
+                if (bgmGroup.Length > 0)
+                    bgmSource.outputAudioMixerGroup = bgmGroup[0];
+
+                if (sfxGroup.Length > 0)
+                    sfxSource.outputAudioMixerGroup = sfxGroup[0];
             }
         }
 

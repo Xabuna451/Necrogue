@@ -19,6 +19,9 @@ public class ShopUI : MonoBehaviour
     public void BindShop(ShopSO shopSO)
     {
         shop = shopSO;
+
+        if (slots == null) return;
+        
         var items = (shop != null) ? shop.items : null;
 
         // 1) 슬롯 초기화
