@@ -1,0 +1,1177 @@
+fileFormatVersion: 2
+guid: 5460a9fb3109c5c4d89bd120d544bce1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7874434345779764751
+    second: mon2_sprite_base_0
+  - first:
+      213: -5308053561852177690
+    second: mon2_sprite_base_1
+  - first:
+      213: -8239285192239496393
+    second: mon2_sprite_base_2
+  - first:
+      213: 5067249700169467010
+    second: mon2_sprite_base_3
+  - first:
+      213: -2068769790207214251
+    second: mon2_sprite_base_4
+  - first:
+      213: 7979593005656572754
+    second: mon2_sprite_base_5
+  - first:
+      213: -2975474517188106228
+    second: mon2_sprite_base_6
+  - first:
+      213: -2924486403265305530
+    second: mon2_sprite_base_7
+  - first:
+      213: -5494979259981164893
+    second: mon2_sprite_base_8
+  - first:
+      213: 2027753830962320297
+    second: mon2_sprite_base_9
+  - first:
+      213: -6718689783046360097
+    second: mon2_sprite_base_10
+  - first:
+      213: -6747643196119349924
+    second: mon2_sprite_base_11
+  - first:
+      213: -2390936010647793096
+    second: mon2_sprite_base_12
+  - first:
+      213: 349028883188842706
+    second: mon2_sprite_base_13
+  - first:
+      213: -8332118419111274676
+    second: mon2_sprite_base_14
+  - first:
+      213: 7847851004153248823
+    second: mon2_sprite_base_15
+  - first:
+      213: -3575026987098243060
+    second: mon2_sprite_base_16
+  - first:
+      213: 7674276320355172878
+    second: mon2_sprite_base_17
+  - first:
+      213: 8450093050471864460
+    second: mon2_sprite_base_18
+  - first:
+      213: 8555413354147516656
+    second: mon2_sprite_base_19
+  - first:
+      213: -3800001010103781210
+    second: mon2_sprite_base_20
+  - first:
+      213: -7531221330838510306
+    second: mon2_sprite_base_21
+  - first:
+      213: 7826574065527186026
+    second: mon2_sprite_base_22
+  - first:
+      213: 591034749627702408
+    second: mon2_sprite_base_23
+  - first:
+      213: -2084807268219795762
+    second: mon2_sprite_base_24
+  - first:
+      213: 2487043532605112037
+    second: mon2_sprite_base_25
+  - first:
+      213: -5547287136246335772
+    second: mon2_sprite_base_26
+  - first:
+      213: 591970810115369545
+    second: mon2_sprite_base_27
+  - first:
+      213: -7169958321474954296
+    second: mon2_sprite_base_28
+  - first:
+      213: -9139316792163305827
+    second: mon2_sprite_base_29
+  - first:
+      213: -8579004973243621321
+    second: mon2_sprite_base_30
+  - first:
+      213: 3405642605317697907
+    second: mon2_sprite_base_31
+  - first:
+      213: 8753891870499995166
+    second: mon2_sprite_base_32
+  - first:
+      213: -6255108188330056909
+    second: mon2_sprite_base_33
+  - first:
+      213: 8885574695136147468
+    second: mon2_sprite_base_34
+  - first:
+      213: -8042757805695000447
+    second: mon2_sprite_base_35
+  - first:
+      213: -6519031879768639178
+    second: mon2_sprite_base_36
+  - first:
+      213: 5607667503952228709
+    second: mon2_sprite_base_37
+  - first:
+      213: -3184763701828355269
+    second: mon2_sprite_base_38
+  - first:
+      213: 5607545013643268922
+    second: mon2_sprite_base_39
+  - first:
+      213: -4175951255123467195
+    second: mon2_sprite_base_40
+  - first:
+      213: -2396447460763435060
+    second: mon2_sprite_base_41
+  - first:
+      213: -2040429237960973731
+    second: mon2_sprite_base_42
+  - first:
+      213: -7330300834745624778
+    second: mon2_sprite_base_43
+  - first:
+      213: 1484828223231791671
+    second: mon2_sprite_base_44
+  - first:
+      213: -4854397213668243082
+    second: mon2_sprite_base_45
+  - first:
+      213: -2590925075765363853
+    second: mon2_sprite_base_46
+  - first:
+      213: 5771423174272451671
+    second: mon2_sprite_base_47
+  - first:
+      213: -8436187054527928944
+    second: mon2_sprite_base_48
+  - first:
+      213: 6278897329780069036
+    second: mon2_sprite_base_49
+  - first:
+      213: -8440059688073037434
+    second: mon2_sprite_base_50
+  - first:
+      213: -2696752776126108144
+    second: mon2_sprite_base_51
+  - first:
+      213: 893377418410196423
+    second: mon2_sprite_base_52
+  - first:
+      213: -4012795095715969229
+    second: mon2_sprite_base_53
+  - first:
+      213: 889437721995301469
+    second: mon2_sprite_base_54
+  - first:
+      213: 3909031672850816586
+    second: mon2_sprite_base_55
+  - first:
+      213: 4119567650819736513
+    second: mon2_sprite_base_56
+  - first:
+      213: -2040435516781701995
+    second: mon2_sprite_base_57
+  - first:
+      213: -2050518398783939681
+    second: mon2_sprite_base_58
+  - first:
+      213: -1581595309462047262
+    second: mon2_sprite_base_59
+  - first:
+      213: 1457320294823643036
+    second: mon2_sprite_base_60
+  - first:
+      213: -3298180293930079553
+    second: mon2_sprite_base_61
+  - first:
+      213: -8800040026481081055
+    second: mon2_sprite_base_62
+  - first:
+      213: 6136963212144014266
+    second: mon2_sprite_base_63
+  - first:
+      213: -2771008627832660078
+    second: mon2_sprite_base_64
+  - first:
+      213: -1535278307942564344
+    second: mon2_sprite_base_65
+  - first:
+      213: 1677632604154396373
+    second: mon2_sprite_base_66
+  - first:
+      213: -1133877525499950752
+    second: mon2_sprite_base_67
+  - first:
+      213: 6472939441336861294
+    second: mon2_sprite_base_68
+  - first:
+      213: -1392145172232634036
+    second: mon2_sprite_base_69
+  - first:
+      213: 8779305965109246516
+    second: mon2_sprite_base_70
+  - first:
+      213: -4422515693032361582
+    second: mon2_sprite_base_71
+  - first:
+      213: -5550509739924516909
+    second: mon2_sprite_base_72
+  - first:
+      213: 7712751281954502974
+    second: mon2_sprite_base_73
+  - first:
+      213: 1836746101942464401
+    second: mon2_sprite_base_74
+  - first:
+      213: 3168077964104259550
+    second: mon2_sprite_base_75
+  - first:
+      213: 8552181576170922685
+    second: mon2_sprite_base_76
+  - first:
+      213: 8928027700174289977
+    second: mon2_sprite_base_77
+  - first:
+      213: 6735261645682461143
+    second: mon2_sprite_base_78
+  - first:
+      213: -321588148944955674
+    second: mon2_sprite_base_79
+  - first:
+      213: -4363212154823485344
+    second: mon2_sprite_base_80
+  - first:
+      213: 6527972165246743593
+    second: mon2_sprite_base_81
+  - first:
+      213: 6476187217065490179
+    second: mon2_sprite_base_82
+  - first:
+      213: -6375156325911623278
+    second: mon2_sprite_base_83
+  - first:
+      213: 4961810525369067833
+    second: mon2_sprite_base_84
+  - first:
+      213: 6098447898930732563
+    second: mon2_sprite_base_85
+  - first:
+      213: -1666641188834034031
+    second: mon2_sprite_base_86
+  - first:
+      213: -652480497591576653
+    second: mon2_sprite_base_87
+  - first:
+      213: -948123342784712515
+    second: mon2_sprite_base_88
+  - first:
+      213: -2802958468355135056
+    second: mon2_sprite_base_89
+  - first:
+      213: 1250015457754496234
+    second: mon2_sprite_base_90
+  - first:
+      213: -1307271614012845123
+    second: mon2_sprite_base_91
+  - first:
+      213: 4757910793503522815
+    second: mon2_sprite_base_92
+  - first:
+      213: -3810103516210571259
+    second: mon2_sprite_base_93
+  - first:
+      213: -4161183446826297497
+    second: mon2_sprite_base_94
+  - first:
+      213: 7290607824039251502
+    second: mon2_sprite_base_95
+  - first:
+      213: 1823223101728014922
+    second: mon2_sprite_base_96
+  - first:
+      213: -4916877332697381859
+    second: mon2_sprite_base_97
+  - first:
+      213: -8515432806160389927
+    second: mon2_sprite_base_98
+  - first:
+      213: -1570786201772569355
+    second: mon2_sprite_base_99
+  - first:
+      213: -1460630482657450719
+    second: mon2_sprite_base_100
+  - first:
+      213: -189494175037387839
+    second: mon2_sprite_base_101
+  - first:
+      213: 2120975449098598034
+    second: mon2_sprite_base_102
+  - first:
+      213: -6110901003644940396
+    second: mon2_sprite_base_103
+  - first:
+      213: -5619364419369425040
+    second: mon2_sprite_base_104
+  - first:
+      213: 7495010833975824243
+    second: mon2_sprite_base_105
+  - first:
+      213: 8461384424006848171
+    second: mon2_sprite_base_106
+  - first:
+      213: 2307917057391842996
+    second: mon2_sprite_base_107
+  - first:
+      213: -2758323760242328378
+    second: mon2_sprite_base_108
+  - first:
+      213: 5739770869910362168
+    second: mon2_sprite_base_109
+  - first:
+      213: 7433153688674146783
+    second: mon2_sprite_base_110
+  - first:
+      213: -4152641080986805094
+    second: mon2_sprite_base_111
+  - first:
+      213: 6404283319754844520
+    second: mon2_sprite_base_112
+  - first:
+      213: -3486404222712801446
+    second: mon2_sprite_base_113
+  - first:
+      213: 8780414113338087685
+    second: mon2_sprite_base_114
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mon2_sprite_base_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 451
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0e9653215c974d60800000000000000
+      internalID: 7874434345779764751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 451
+        width: 25
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e2dd05a8610656b0800000000000000
+      internalID: -5308053561852177690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_2
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 451
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 733cd6175cd28ad80800000000000000
+      internalID: -8239285192239496393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_3
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 451
+        width: 27
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2844ece31cc725640800000000000000
+      internalID: 5067249700169467010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_10
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 387
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd3b97d4d3b62c2a0800000000000000
+      internalID: -6718689783046360097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_11
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 387
+        width: 24
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c558930834e8b52a0800000000000000
+      internalID: -6747643196119349924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 387
+        width: 25
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83216a4bd50b1ded0800000000000000
+      internalID: -2390936010647793096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_13
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 387
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d082d68beff7d400800000000000000
+      internalID: 349028883188842706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_21
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 323
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e15a68a0a1abb7790800000000000000
+      internalID: -7531221330838510306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_22
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 323
+        width: 24
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a62680845a39d9c60800000000000000
+      internalID: 7826574065527186026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_23
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 323
+        width: 27
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88c987d29f6c33800800000000000000
+      internalID: 591034749627702408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_24
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 323
+        width: 29
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec64b98d5d64113e0800000000000000
+      internalID: -2084807268219795762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_30
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 259
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 730218b2e6041f880800000000000000
+      internalID: -8579004973243621321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_31
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 259
+        width: 31
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 371b5e9d7e5434f20800000000000000
+      internalID: 3405642605317697907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_33
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 259
+        width: 37
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33323f26e346139a0800000000000000
+      internalID: -6255108188330056909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_34
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 259
+        width: 38
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c083ac08b17ef4b70800000000000000
+      internalID: 8885574695136147468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_35
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 259
+        width: 37
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 180ac095362626090800000000000000
+      internalID: -8042757805695000447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_36
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 264
+        width: 26
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63971fe6b0fb785a0800000000000000
+      internalID: -6519031879768639178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_38
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 272
+        width: 12
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3b76fa69427dc3d0800000000000000
+      internalID: -3184763701828355269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_45
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 131
+        width: 26
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67988a03477b1acb0800000000000000
+      internalID: -4854397213668243082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_46
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 130
+        width: 27
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37b7a53fe5f2b0cd0800000000000000
+      internalID: -2590925075765363853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_47
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 130
+        width: 23
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75487f67cc6381050800000000000000
+      internalID: 5771423174272451671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_48
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 131
+        width: 27
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0952d1c1294acea80800000000000000
+      internalID: -8436187054527928944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_49
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 133
+        width: 21
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca290babadf132750800000000000000
+      internalID: 6278897329780069036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_50
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 145
+        width: 20
+        height: 25
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 689ff495e62eeda80800000000000000
+      internalID: -8440059688073037434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mon2_sprite_base_51
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 145
+        width: 20
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01e64fb53a5339ad0800000000000000
+      internalID: -2696752776126108144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c8eba9e96a405bf44a5926daf4f05985
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":8.0},"gridSpriteSize":{"x":28.0,"y":128.0},"gridSpriteOffset":{"x":21.0,"y":19.0},"gridSpritePadding":{"x":38.0,"y":21.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      mon2_sprite_base_0: 7874434345779764751
+      mon2_sprite_base_1: -5308053561852177690
+      mon2_sprite_base_10: -6718689783046360097
+      mon2_sprite_base_100: -1460630482657450719
+      mon2_sprite_base_101: -189494175037387839
+      mon2_sprite_base_102: 2120975449098598034
+      mon2_sprite_base_103: -6110901003644940396
+      mon2_sprite_base_104: -5619364419369425040
+      mon2_sprite_base_105: 7495010833975824243
+      mon2_sprite_base_106: 8461384424006848171
+      mon2_sprite_base_107: 2307917057391842996
+      mon2_sprite_base_108: -2758323760242328378
+      mon2_sprite_base_109: 5739770869910362168
+      mon2_sprite_base_11: -6747643196119349924
+      mon2_sprite_base_110: 7433153688674146783
+      mon2_sprite_base_111: -4152641080986805094
+      mon2_sprite_base_112: 6404283319754844520
+      mon2_sprite_base_113: -3486404222712801446
+      mon2_sprite_base_114: 8780414113338087685
+      mon2_sprite_base_12: -2390936010647793096
+      mon2_sprite_base_13: 349028883188842706
+      mon2_sprite_base_14: -8332118419111274676
+      mon2_sprite_base_15: 7847851004153248823
+      mon2_sprite_base_16: -3575026987098243060
+      mon2_sprite_base_17: 7674276320355172878
+      mon2_sprite_base_18: 8450093050471864460
+      mon2_sprite_base_19: 8555413354147516656
+      mon2_sprite_base_2: -8239285192239496393
+      mon2_sprite_base_20: -3800001010103781210
+      mon2_sprite_base_21: -7531221330838510306
+      mon2_sprite_base_22: 7826574065527186026
+      mon2_sprite_base_23: 591034749627702408
+      mon2_sprite_base_24: -2084807268219795762
+      mon2_sprite_base_25: 2487043532605112037
+      mon2_sprite_base_26: -5547287136246335772
+      mon2_sprite_base_27: 591970810115369545
+      mon2_sprite_base_28: -7169958321474954296
+      mon2_sprite_base_29: -9139316792163305827
+      mon2_sprite_base_3: 5067249700169467010
+      mon2_sprite_base_30: -8579004973243621321
+      mon2_sprite_base_31: 3405642605317697907
+      mon2_sprite_base_32: 8753891870499995166
+      mon2_sprite_base_33: -6255108188330056909
+      mon2_sprite_base_34: 8885574695136147468
+      mon2_sprite_base_35: -8042757805695000447
+      mon2_sprite_base_36: -6519031879768639178
+      mon2_sprite_base_37: 5607667503952228709
+      mon2_sprite_base_38: -3184763701828355269
+      mon2_sprite_base_39: 5607545013643268922
+      mon2_sprite_base_4: -2068769790207214251
+      mon2_sprite_base_40: -4175951255123467195
+      mon2_sprite_base_41: -2396447460763435060
+      mon2_sprite_base_42: -2040429237960973731
+      mon2_sprite_base_43: -7330300834745624778
+      mon2_sprite_base_44: 1484828223231791671
+      mon2_sprite_base_45: -4854397213668243082
+      mon2_sprite_base_46: -2590925075765363853
+      mon2_sprite_base_47: 5771423174272451671
+      mon2_sprite_base_48: -8436187054527928944
+      mon2_sprite_base_49: 6278897329780069036
+      mon2_sprite_base_5: 7979593005656572754
+      mon2_sprite_base_50: -8440059688073037434
+      mon2_sprite_base_51: -2696752776126108144
+      mon2_sprite_base_52: 893377418410196423
+      mon2_sprite_base_53: -4012795095715969229
+      mon2_sprite_base_54: 889437721995301469
+      mon2_sprite_base_55: 3909031672850816586
+      mon2_sprite_base_56: 4119567650819736513
+      mon2_sprite_base_57: -2040435516781701995
+      mon2_sprite_base_58: -2050518398783939681
+      mon2_sprite_base_59: -1581595309462047262
+      mon2_sprite_base_6: -2975474517188106228
+      mon2_sprite_base_60: 1457320294823643036
+      mon2_sprite_base_61: -3298180293930079553
+      mon2_sprite_base_62: -8800040026481081055
+      mon2_sprite_base_63: 6136963212144014266
+      mon2_sprite_base_64: -2771008627832660078
+      mon2_sprite_base_65: -1535278307942564344
+      mon2_sprite_base_66: 1677632604154396373
+      mon2_sprite_base_67: -1133877525499950752
+      mon2_sprite_base_68: 6472939441336861294
+      mon2_sprite_base_69: -1392145172232634036
+      mon2_sprite_base_7: -2924486403265305530
+      mon2_sprite_base_70: 8779305965109246516
+      mon2_sprite_base_71: -4422515693032361582
+      mon2_sprite_base_72: -5550509739924516909
+      mon2_sprite_base_73: 7712751281954502974
+      mon2_sprite_base_74: 1836746101942464401
+      mon2_sprite_base_75: 3168077964104259550
+      mon2_sprite_base_76: 8552181576170922685
+      mon2_sprite_base_77: 8928027700174289977
+      mon2_sprite_base_78: 6735261645682461143
+      mon2_sprite_base_79: -321588148944955674
+      mon2_sprite_base_8: -5494979259981164893
+      mon2_sprite_base_80: -4363212154823485344
+      mon2_sprite_base_81: 6527972165246743593
+      mon2_sprite_base_82: 6476187217065490179
+      mon2_sprite_base_83: -6375156325911623278
+      mon2_sprite_base_84: 4961810525369067833
+      mon2_sprite_base_85: 6098447898930732563
+      mon2_sprite_base_86: -1666641188834034031
+      mon2_sprite_base_87: -652480497591576653
+      mon2_sprite_base_88: -948123342784712515
+      mon2_sprite_base_89: -2802958468355135056
+      mon2_sprite_base_9: 2027753830962320297
+      mon2_sprite_base_90: 1250015457754496234
+      mon2_sprite_base_91: -1307271614012845123
+      mon2_sprite_base_92: 4757910793503522815
+      mon2_sprite_base_93: -3810103516210571259
+      mon2_sprite_base_94: -4161183446826297497
+      mon2_sprite_base_95: 7290607824039251502
+      mon2_sprite_base_96: 1823223101728014922
+      mon2_sprite_base_97: -4916877332697381859
+      mon2_sprite_base_98: -8515432806160389927
+      mon2_sprite_base_99: -1570786201772569355
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

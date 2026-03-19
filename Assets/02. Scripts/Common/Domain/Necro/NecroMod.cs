@@ -10,10 +10,10 @@ namespace Necrogue.Core.Domain.Necro
     public readonly struct NecroMod
     {
         public readonly NecroParam param;
-        public readonly Necrogue.Core.Domain.Mods.ModType type;
+        public readonly Mods.ModType type;
         public readonly float value;
 
-        public NecroMod(NecroParam param, Necrogue.Core.Domain.Mods.ModType type, float value)
+        public NecroMod(NecroParam param, Mods.ModType type, float value)
         {
             this.param = param;
             this.type = type;

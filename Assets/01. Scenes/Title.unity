@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Gold: '
+  m_text: 'Death: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8bed5d959dad59409ed1cdd43f55a7b, type: 2}
   m_sharedMaterial: {fileID: 7280500370293755858, guid: d8bed5d959dad59409ed1cdd43f55a7b, type: 2}
@@ -1318,12 +1318,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   preview:
-    deathCount: 0
-    metaGold: 5
+    deathCount: 5
+    metaGold: 209
     perkBonus: 0
     haveItemArray: []
   saveFileExists: 1
-  infoUI: {fileID: 0}
 --- !u!1001 &655617926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2913,7 +2912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18845fd30b23f634f88d003b22931bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleGameStart
-  gameStart: {fileID: 0}
 --- !u!1001 &1510378933
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -68,6 +68,10 @@ public class SaveManager : MonoBehaviour
     [SerializeField] private GameSaveData preview;     // 인스펙터에서 보는 값(복사본)
     [SerializeField] private bool saveFileExists;       // 파일 존재 여부
 
+    //
+
+    // [SerializeField] InfoUI infoUI;
+
     void Awake()
     {
         var root = transform.root.gameObject;

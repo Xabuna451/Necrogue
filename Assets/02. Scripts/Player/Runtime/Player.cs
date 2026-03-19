@@ -187,14 +187,5 @@ namespace Necrogue.Player.Runtime
                 appliable.ApplyStats(RuntimeStats, NecroRuntime);
             }
         }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                var necro = Necro;
-                necro?.NecromancerLevelUp();
-            }
-        }
     }
 }
